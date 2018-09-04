@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_inventory" merge="delete" />
+	<windowclass name="charsheet_inventory">
+		<sheetdata>
+			<frame_char name="inventoryframe">
+				<bounds>15,0,-29,-300</bounds>
+			</frame_char>
+			
+			<label name="count_label">
+				<anchored to="inventoryframe" position="insidetopleft" offset="20,10" width="20" />
+				<center />
+				<static>#</static>
+			</label>
+			<genericcontrol name="rightanchor">
+				<anchored to="inventoryframe" width="0" height="0">
+					<top offset="10" />
+					<right offset="-20" />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			<genericcontrol name="idelete_header">
+				<anchored to="rightanchor" width="20" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<disabled />
+			</genericcontrol>
+			<genericcontrol name="shortcut_header">
+				<anchored to="rightanchor" width="20" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-2" />
+				</anchored>
+				<disabled />
+			</genericcontrol>
+			<genericcontrol name="carried_header">
+				<anchored to="rightanchor" width="20" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<icon>char_inv_carried_header</icon>
+				<tooltip textres="char_tooltip_itemcarried" />
+			</genericcontrol>
+			<label name="refresh_label">
+				<anchored to="rightanchor" width="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<center />
+				<static>Ref.</static>
+			</label>
+			<label name="charges_label">
+				<anchored to="rightanchor" width="100">
+					<top />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<center />
+				<static>Charges</static>
+			</label>
+			<label name="addtoroll_label">
+				<anchored to="rightanchor" width="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<center />
+				<static>+</static>
+			</label>
+			<label name="buytoroll_label">
+				<anchored to="rightanchor" width="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<center />
+				<static>$</static>
+			</label>
+			<label name="location_label">
+				<anchored to="rightanchor" width="80">
+					<top />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<center />
+				<static textres="char_label_itemlocation" />
+			</label>
+
+			<label name="name_label">
+				<anchored to="rightanchor">
+					<top />
+					<left parent="inventoryframe" offset="55" />
+					<right anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<static textres="char_label_itemname" />
+				<center />
+			</label>
+
+			<list_charinv name="inventorylist">
+				<anchored to="inventoryframe">
+					<top offset="40" />
+					<left offset="15" />
+					<right offset="-20" />
+					<bottom offset="-15" />
+				</anchored>
+			</list_charinv>
+			<scrollbar>
+				<anchored to="inventorylist" />
+				<target>inventorylist</target>
+			</scrollbar>
+
+			<button_iedit name="inventorylist_iedit">
+				<anchored to="inventorylist" position="aboveright" offset="5,10" />
+				<target>inventorylist</target>
+			</button_iedit>
+			<button_iadd name="inventorylist_iadd">
+				<anchored to="inventorylist_iedit" position="lefthigh" offset="5,0" />
+				<target>inventorylist</target>
+			</button_iadd>
+
+			<frame_char name="accountingframe">
+				<bounds>15,-300,250,295</bounds>
+			</frame_char>
+			<labelnoheight name="accountinglabel">
+				<anchored to="accountingframe" position="insidetopleft" offset="5,5" width="240" height="35" />
+				<center />
+				<static>Accounting</static>
+			</labelnoheight>
+
+			<genericcontrol name="nameanchor">
+				<anchored to="accountinglabel" position="insidetopleft" offset="5,35" width="120" height="5" />
+			</genericcontrol>
+			<genericcontrol name="spacer1">
+				<anchored to="nameanchor" position="right" width="5"/>
+			</genericcontrol>
+			<genericcontrol name="numanchor">
+				<anchored to="spacer1" position="right" width="25"/>
+			</genericcontrol>
+			<genericcontrol name="spacer2">
+				<anchored to="numanchor" position="right" width="5"/>
+			</genericcontrol>
+			<genericcontrol name="b1anchor">
+				<anchored to="spacer2" position="right" width="25"/>
+			</genericcontrol>
+			<genericcontrol name="spacer3">
+				<anchored to="b1anchor" position="right" width="5"/>
+			</genericcontrol>
+			<genericcontrol name="b2anchor">
+				<anchored to="spacer3" position="right" width="25"/>
+			</genericcontrol>
+			<genericcontrol name="spacer4">
+				<anchored to="b2anchor" position="right" width="5"/>
+			</genericcontrol>
+			<genericcontrol name="b3anchor">
+				<anchored to="spacer4" position="right" width="25"/>
+			</genericcontrol>
+
+			<labelnoheight name="Sustenence">
+				<anchored to="nameanchor" position="below" height="35"/>
+				<static>SUSTENENCE</static>
+			</labelnoheight>
+			
+			<accountingnumber name="sustenencecost">
+				<anchored to="numanchor" position="below" height="25" offset="0,5"/>
+				<center />
+			</accountingnumber>
+
+			<labelnoheight name="Maintenance">
+				<anchored to="Sustenence" position="below" height="35"/>
+				<static>MAINTENANCE</static>
+			</labelnoheight>
+
+			<accountingnumber name="maintenancecost">
+				<anchored to="sustenencecost" position="below" height="25" offset="0,10"/>
+				<center />
+			</accountingnumber>
+
+			<labelnoheight name="Total">
+				<anchored to="maintenancecost" position="right" width="30" offset="5,0"/>
+				<center/>
+				<static>Total</static>
+			</labelnoheight>
+
+			<accountingnumber name="total">
+				<anchored to="Total" position="right" width="25" offset="5,0"/>
+				<center />
+			</accountingnumber>
+
+			<stringfield name="BountyOnHand" source="coins.slot1.name">
+				<anchored to="Maintenance" position="below" height="35"/>
+				<static>Bounty Bank</static>
+			</stringfield>
+
+			<accountingnumber name="bountyonhand" source="coins.slot1.amount">
+				<anchored to="maintenancecost" position="below" height="25" offset="0,10"/>
+				<description field="name" />
+			</accountingnumber>
+
+			<button_minus name="bountyonhandminus">
+				<anchored to="bountyonhand" position="right" width="25" offset="5,0" />		
+				<script>
+					function onButtonPress()
+						local onhand = window.getDatabaseNode().getChild("coins.slot1.amount")
+						local message = ChatManager.createBaseMessage(nodeTarget)
+						
+						if onhand.getValue() >= 1 then
+							onhand.setValue(onhand.getValue() - 1)
+							message.text = "Removed 1 bounty from On Hand."
+							Comm.deliverChatMessage(message)
+						else
+							return true
+						end
+
+					end
+				</script>
+			</button_minus>
+
+			<button_plus name="bountyonhandplus">
+				<anchored to="bountyonhandminus" position="right" width="25" />
+				<script>
+					function onButtonPress()
+						local onhand = window.getDatabaseNode().getChild("coins.slot1.amount")
+						local message = ChatManager.createBaseMessage(nodeTarget)
+
+						onhand.setValue(onhand.getValue() + 1)
+						message.text = "Added +1 to bounty On Hand."
+						Comm.deliverChatMessage(message)
+					end
+				</script>
+			</button_plus>
+
+			<labelnoheight name="HandtoX">
+				<anchored to="BountyOnHand" position="below" height="35"/>
+				<static>x to Retirement: </static>
+			</labelnoheight>
+
+			<number_dropadd name="handtox">
+				<anchored to="bountyonhand" position="below" height="25" offset="0,10"/>
+				<description field="name" />
+				<min>0</min>
+			</number_dropadd>
+
+			<button_bank name="handtobank">
+				<anchored to="handtox" position="right" width="25" offset="5,0" />
+				<script>
+					function onButtonPress()
+						local to = window.getDatabaseNode().getChild("coins.slot2.amount")
+						local from = window.getDatabaseNode().getChild("coins.slot1.amount")
+						local amount = window.getDatabaseNode().getChild("handtox")
+
+						RMItem.handleBountyTransfer(to, from, amount)
+					end
+				</script>
+			</button_bank>
+
+			<stringfield name="BountyInBank" source="coins.slot2.name">
+				<anchored to="HandtoX" position="below" height="35"/>
+				<static>Retirement</static>
+			</stringfield>
+
+			<accountingnumber name="bountyinbank" source="coins.slot2.amount">
+				<anchored to="handtox" position="below" height="25" offset="0,10"/>
+				<description field="name" />
+			</accountingnumber>
+
+			<labelnoheight name="BanktoX">
+				<anchored to="BountyInBank" position="below" height="35"/>
+				<static>x to Bank: </static>
+			</labelnoheight>
+
+			<number_dropadd name="banktox">
+				<anchored to="bountyinbank" position="below" height="25" offset="0,10"/>
+				<description field="name" />
+				<min>0</min>
+			</number_dropadd>
+
+			<button_bank name="banktohand">
+				<anchored to="banktox" position="right" width="25" offset="5,0" />
+				<script>
+					function onButtonPress()
+						local to = window.getDatabaseNode().getChild("coins.slot1.amount")
+						local from = window.getDatabaseNode().getChild("coins.slot2.amount")
+						local amount = window.getDatabaseNode().getChild("banktox")
+
+						RMItem.handleBountyTransfer(to, from, amount)
+					end
+				</script>
+			</button_bank>
+
+			<buttoncontrol name="refreshaccounting">
+				<anchored to="handtobank" position="below" offset="0,75" height="25" />
+				<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
+				<script>
+					function onButtonPress()
+						local sheet = window.getDatabaseNode()
+
+						RMItem.refreshAccounting(sheet)
+					end
+				</script>
+			</buttoncontrol>
+
+			<button_text name="processaccounting">
+				<anchored to="refreshaccounting" position="right" width="45" offset="3,0" />
+				<text>Process</text>
+				<script>
+					function onButtonPress()
+						local sheet = window.getDatabaseNode()
+
+						RMItem.processAccounting(sheet)
+					end
+				</script>
+			</button_text>
+
+
+			<frame_char name="miscitemsframe">
+				<bounds>270,-300,250,295</bounds>
+			</frame_char>
+			<labelnoheight name="backpackl">
+				<anchored to="miscitemsframe" position="insidetopleft" width="250" height="20" offset="0,5" />
+					<center/>
+					<static>Backpack</static>
+					<font>reference-b-large</font>
+			</labelnoheight>
+			<labelnoheight name="maxhaull">
+				<anchored to="miscitemsframe" position="insidetopleft" width="100" offset="5,30" height="20" />
+				<center/>
+				<static>Max Haul</static>
+			</labelnoheight>
+			<basicnumber name="maxhaul">
+				<anchored to="maxhaull" position="right" width="20" offset="5,0" />
+			</basicnumber>
+			<string_labeled name="haul1">
+                <anchored to="miscitemsframe" position="insidetopleft" offset="5,50" height="20" width="240" />
+				<label>Item 1</label>
+			</string_labeled>
+			<string_labeled name="haul2">
+                <anchored to="haul1" position="below" height="20" offset="0,5" />
+				<label>Item 2</label>
+			</string_labeled>
+			<string_labeled name="haul3">
+                <anchored to="haul2" position="below" height="20" offset="0,5" />
+				<label>Item 3</label>
+			</string_labeled>
+			<string_labeled name="haul4">
+                <anchored to="haul3" position="below" height="20" offset="0,5" />
+				<label>Item 4</label>
+			</string_labeled>
+			<string_labeled name="haul5">
+                <anchored to="haul4" position="below" height="20" offset="0,5" />
+				<label>Item 5</label>
+			</string_labeled>
+			<string_labeled name="haul6">
+                <anchored to="haul5" position="below" height="20" offset="0,5" />
+				<label>Item 6</label>
+			</string_labeled>
+
+
+			<labelnoheight name="miscl">
+				<anchored to="haul6" position="below" height="20" offset="0,5" />
+					<center/>
+					<static>Misc</static>
+					<font>reference-b-large</font>
+			</labelnoheight>
+			<labelnoheight name="rationchargel">
+				<anchored to="maxhaull" position="below" height="20" offset="0,170" />
+				<static>Rations:</static>
+				<center/>
+			</labelnoheight>
+			<basicnumber name="rations">
+				<anchored to="rationchargel" position="right" width="20" offset="5,0" />
+				<max>10</max>
+				<min>0</min>
+				<default>10</default>
+			</basicnumber>
+			<buttoncontrol name="refreshrations">
+				<anchored to="rations" position="right" offset="0,5" width="20" />
+				<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
+				<script>
+					function onButtonPress()
+						local sheet = window.getDatabaseNode()
+						local refresh = sheet.getChild("refreshcurnumber")
+						local currefresh = refresh.getValue()
+						local rationcharge = sheet.getChild("rations")
+
+						if currefresh > 0 then
+							refresh.setValue(currefresh - 1)
+							rationcharge.setValue(10)
+						end
+					end
+				</script>
+			</buttoncontrol>
+
+			<labelnoheight name="refreshl">
+				<anchored to="rationchargel" position="below" height="20" offset="" />
+					<center/>
+					<static>Refresh:</static>
+			</labelnoheight>
+			<basicnumber name="refreshcurnumber">
+				<anchored to="refreshl" position="right" width="20" offset="5,0" />
+			</basicnumber>
+
+
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="char_invitem">
+		<margins control="0,0,0,2" />
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				getDatabaseNode().onDelete = onDelete;
+			end
+			function onDelete(node)
+				ItemManager.onCharRemoveEvent(node);
+			end
+		</script>
+		<sheetdata>
+			<hidden_record_isidentified name="isidentified"><class>item</class><ignorehost /></hidden_record_isidentified>
+
+			<number_charinv name="count">
+				<bounds>5,2,20,20</bounds>
+				<tabtarget next="name" />
+				<default>1</default>
+			</number_charinv>
+
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			<button_idelete name="idelete">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+			</button_idelete>
+			<linkcontrol_id name="shortcut">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-2" />
+				</anchored>
+				<class>item</class>
+				<readonly />
+			</linkcontrol_id>
+			<button_char_inv_carried name="carried">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+			</button_char_inv_carried>
+			<button_refresh name="refresh">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+			</button_refresh>
+			<number_charinv name="maxcharges">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<delaykeyupdate />
+			</number_charinv>
+
+			<number_charinv name="curcharges">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<delaykeyupdate />
+			</number_charinv>
+			<button_plus name="addtocur">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />	
+				</anchored>
+				<script>
+					function onButtonPress()
+						local itemNode = window.getDatabaseNode()
+						if DB.getValue(itemNode, "curcharges") >= DB.getValue(itemNode, "maxcharges") then
+							return true
+						else
+							DB.setValue(itemNode, "curcharges", "number", DB.getValue(itemNode, "curcharges") + 1)
+						end
+
+					end
+			</script>
+		</button_plus>
+		<button_minus name="subtractfromcur">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />	
+				</anchored>
+				<script>
+					function onButtonPress()
+						local itemNode = window.getDatabaseNode()
+						if DB.getValue(itemNode, "curcharges") == 0 then
+							return true
+						else
+							DB.setValue(itemNode, "curcharges", "number", DB.getValue(itemNode, "curcharges") - 1)
+						end
+
+					end
+			</script>
+		</button_minus>
+
+			<button_plus name="plus1toroll">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />		
+				</anchored>
+				<script>
+						function onButtonPress()						
+						RMItem.PlusOne(window.getDatabaseNode())
+						end
+					</script>
+			</button_plus>
+			<button_roll name="buyaroll">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<script>
+					function onButtonPress()
+						local itemNode = window.getDatabaseNode()
+						local rActor = ActorManager.getActor("pc", window.windowlist.window.getDatabaseNode())
+						
+						RMItem.BuyARoll(itemNode, rActor)
+					
+
+					end
+				</script>
+			</button_roll>
+			<string_charinvloc name="location">
+				<anchored width="80" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<tabtarget next="weight" prev="nonid_name" />
+			</string_charinvloc>
+
+			<string_charinvname name="name">
+				<anchored position="insidetopleft" offset="35,2" height="20">
+					<right parent="rightanchor" anchor="left" relation="current" offset="-5" />
+				</anchored>
+				<tabtarget next="nonid_name" prev="count" />
+			</string_charinvname>
+			<string_charinvname name="nonid_name">
+				<anchored position="insidetopleft" offset="35,2" height="20">
+					<right parent="rightanchor" anchor="left" relation="current" offset="-5" />
+				</anchored>
+				<empty textres="library_recordtype_empty_nonid_item" />
+				<invisible />
+				<tabtarget next="location" prev="name" />
+			</string_charinvname>
+		</sheetdata>
+	</windowclass>
+</root>

@@ -1,0 +1,84 @@
+<root version="3.3" release="1" logo="logo.png">
+  <description>
+    <text>Red Markets</text>
+    <author>THEGOBBLER</author>
+  </description>
+  <importruleset source="CoreRPG" />
+    
+  <script name="TokenManager" file="scripts/manager_token.lua" />
+  <script name="RMRoll" file="scripts/rmroll.lua" />
+
+  <icon name="tab_health" file="graphics/tabs/tab_health.png" />
+  
+  <includefile source="gameelements.xml"/>
+  <includefile source="campaign/templates.xml"/>
+  <includefile source="campaign/record_char.xml"/>
+  <includefile source="campaign/record_char_main.xml"/>
+  <includefile source="campaign/record_char_skills.xml"/>
+  <includefile source="campaign/record_char_health.xml"/>
+  <includefile source="campaign/record_char_inventory.xml"/>
+  <includefile source="campaign/record_item.xml"/>
+  <includefile source="campaign/record_npc.xml"/>
+
+  <!-- crewsheet -->
+
+  <includefile source="ps/ps.xml"/>
+  <includefile source="ps/ps_crewsheet.xml"/>
+ 
+  <script source="ct/scripts/ct_entry.lua"/>
+  <includefile source="ct/template_ct.xml"/>
+  <includefile source="ct/ct_client.xml"/>
+  <includefile source="ct/ct_host.xml"/>
+
+
+
+ 
+  <includefile source="desktop/desktop_panels.xml"/>
+  <includefile source="desktop/desktop_classes.xml"/>
+
+
+  <script name="RMDamage" file="scripts/rmdamage.lua" />
+  <script name="RMItem" file="scripts/rmitem.lua" />
+
+  <icon name="d10ricon" file="graphics/icons/d10_ricon.png" />
+  <icon name="button_plus" file="graphics/buttons/button_action_damage.png" />
+  <icon name="button_plus_down" file="graphics/buttons/button_action_damage_down.png" />
+  <icon name="button_minus" file="graphics/buttons/button_action_heal.png" />
+  <icon name="button_minus_down" file="graphics/buttons/button_action_heal_down.png" />
+  <icon name="button_healall" file="graphics/buttons/button_action_healall.png" />
+  <icon name="button_healall_down" file="graphics/buttons/button_action_healall_down.png" />
+  <icon name="button_roll" file="graphics/buttons/button_dialog_roll.png" />
+  <icon name="button_roll_down" file="graphics/buttons/button_dialog_roll_down.png" />
+  <icon name="button_action_downgrade" file="graphics/buttons/button_action_downgrade.png" />
+  <icon name="button_action_downgrade_down" file="graphics/buttons/button_action_downgrade_down.png" />
+  <icon name="button_action_upgrade" file="graphics/buttons/button_action_upgrade.png" />
+  <icon name="button_action_upgrade_down" file="graphics/buttons/button_action_upgrade_down.png" />
+  <icon name="button_action_swap" file="graphics/buttons/button_action_swap.png" />
+  <icon name="button_action_swap_down" file="graphics/buttons/button_action_swap_down.png" />
+  <icon name="button_action_explosive" file="graphics/buttons/button_action_explosive.png" />
+  <icon name="button_action_explosive_down" file="graphics/buttons/button_action_explosive_down.png" />
+  <icon name="button_action_bank" file="graphics/buttons/button_action_bank.png" />
+  <icon name="button_action_bank_down" file="graphics/buttons/button_action_bank_down.png" />
+
+  <icon name="icon_crack" file="graphics/icons/icon_crack.png" />
+  <icon name="icon_crumble" file="graphics/icons/icon_crumble.png" />
+  <icon name="icon_break" file="graphics/icons/icon_break.png" />
+  <icon name="icon_blank" file="graphics/icons/icon_blank.png"/>
+  <icon name="icon_hobbled" file="graphics/icons/icon_hobbled.png" />
+  <icon name="icon_winged" file="graphics/icons/icon_winged.png" />
+  <icon name="icon_gassed" file="graphics/icons/icon_gassed.png" />
+  <icon name="icon_unconscious" file="graphics/icons/icon_unconscious.png" />
+  <icon name="icon_lamed" file="graphics/icons/icon_lamed.png" />
+  <icon name="icon_maimed" file="graphics/icons/icon_maimed.png" />
+  <icon name="icon_dead" file="graphics/icons/icon_dead.png" />
+  <icon name="icon_health_100" file="graphics/icons/icon_health_100.png" />
+  <icon name="icon_health_90" file="graphics/icons/icon_health_90.png" />
+  <icon name="icon_health_80" file="graphics/icons/icon_health_80.png" />
+  <icon name="icon_health_60" file="graphics/icons/icon_health_60.png" />
+  <icon name="icon_health_40" file="graphics/icons/icon_health_40.png" />
+  <icon name="icon_health_20" file="graphics/icons/icon_health_20.png" />
+  <icon name="icon_health_0" file="graphics/icons/icon_health_0.png" />
+  
+
+
+</root>

@@ -1,0 +1,909 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_health">
+		<sheetdata>
+			<!--Strength Skill Box -->
+			<frame_char name="healthframe">
+				<bounds>20,5,501,300</bounds>
+			</frame_char>
+			<!-- head -->
+			<labelnoheight name="resethealthl">
+				<anchored to="healthframe" position="insidetopleft" offset="10,10" height="20" />
+				<static>Reset:</static>
+			</labelnoheight>
+			<button_plus name="resethealth">
+				<anchored to="resethealthl" position="right" offset="5,0" width="20" />
+				<script>
+					function onButtonPress()
+						local sheet = window.getDatabaseNode()
+						local locs = {"hd", "to", "ra", "la", "rl", "ll"}
+						local message = ChatManager.createBaseMessage(sheet)
+
+						for i=1,6 do
+							DB.setValue(sheet, locs[i] .. "stun", "number", 0)
+							DB.setValue(sheet, locs[i] .. "kill", "number", 0)
+							DB.setValue(sheet, locs[i] .. "stuneffect", "string", "icon_blank")
+							DB.setValue(sheet, locs[i] .. "killeffect", "string", "icon_blank")
+						end
+
+						message.text = "All health fields on sheet reset."
+						Comm.deliverChatMessage(message)
+					end
+				</script>
+
+			</button_plus>
+
+			<!-- head frame -->
+
+			<frame_char name="hdframe">
+				<anchored to="healthframe" position="insidetopleft" offset="167,0" width="167" height="100" />
+			</frame_char>
+
+			<labelnoheight name="hdtitle">
+				<anchored to="hdframe" position="insidetopleft" width="167" height="20" offset="5,5" />
+				<center />
+				<font>reference-b-large</font>
+				<static>Head Cur. and Inc.</static>
+			</labelnoheight>
+
+			<labelnoheight name="hdstunl">
+				<anchored to="hdframe" position="insidetopleft" width="20" height="20" offset="5,35" />
+				<center />
+				<static>S</static>
+			</labelnoheight>
+			<healthnumber name="hdstun">
+				<anchored to="hdstunl" position="right" width="20" />
+			</healthnumber>
+			<button_effects name="hdstuneffect">
+				<anchored to="hdstun" position="right" width="20" offset="5,0" />
+			</button_effects>
+			<button_status name="hdstunstatus">
+				<anchored to="hdstuneffect" position="right" width="23" />
+			</button_status>
+			<basicnumber name="hdstuninc">
+				<anchored to="hdstunstatus" position="right" width="20" />
+			</basicnumber>
+			<button_-1stun name="hdstun-1">
+				<anchored to="hdstuninc" position="right" offset="5,0" width="40" />
+				<center />
+				<text>-1 Stun</text>
+			</button_-1stun>	
+
+			<labelnoheight name="hdkilll">
+				<anchored to="hdstunl" position="below" height="20" offset="0,15" />
+				<center />
+				<static>K</static>
+			</labelnoheight>
+			<healthnumber name="hdkill">
+				<anchored to="hdkilll" position="right" width="20" />
+			</healthnumber>
+			<button_effects name="hdkilleffect">
+				<anchored to="hdkill" position="right" width="20" offset="5,0" />
+			</button_effects>
+			<button_status name="hdkillstatus">
+				<anchored to="hdkilleffect" position="right" width="23" />
+			</button_status>
+			<basicnumber name="hdkillinc">
+				<anchored to="hdkillstatus" position="right" width="20" />
+			</basicnumber>
+			<button_killtostun name="hdkillktostun">
+				<anchored to="hdkillinc" position="right" width="40" offset="5,0" />
+				<center />
+				<text>K to S</text>
+			</button_killtostun>
+
+			<!-- torso frame -->
+
+			<frame_char name="toframe">
+				<anchored to="hdframe" position="below" height="100" offset="0,0" />
+			</frame_char>
+
+			<labelnoheight name="totitle">
+				<anchored to="toframe" position="insidetopleft" width="167" height="20" offset="5,5" />
+				<center />
+				<font>reference-b-large</font>
+				<static>Torso Cur. and Inc.</static>
+			</labelnoheight>
+
+			<labelnoheight name="tostunl">
+				<anchored to="toframe" position="insidetopleft" width="20" height="20" offset="5,35" />
+				<center />
+				<static>S</static>
+			</labelnoheight>
+			<healthnumber name="tostun">
+				<anchored to="tostunl" position="right" width="20" />
+			</healthnumber>
+			<button_effects name="tostuneffect">
+				<anchored to="tostun" position="right" width="20" offset="5,0" />
+			</button_effects>
+			<button_status name="tostunstatus">
+				<anchored to="tostuneffect" position="right" width="23" />
+			</button_status>
+			<basicnumber name="tostuninc">
+				<anchored to="tostunstatus" position="right" width="20" />
+			</basicnumber>
+			<button_-1stun name="tostun-1">
+				<anchored to="tostuninc" position="right" offset="5,0" width="40" />
+				<center />
+				<text>-1 Stun</text>
+			</button_-1stun>
+			
+
+			<labelnoheight name="tokilll">
+				<anchored to="tostunl" position="below" height="20" offset="0,15" />
+				<center />
+				<static>K</static>
+			</labelnoheight>
+			<healthnumber name="tokill">
+				<anchored to="tokilll" position="right" width="20" />
+			</healthnumber>
+			<button_effects name="tokilleffect">
+				<anchored to="tokill" position="right" width="20" offset="5,0" />
+			</button_effects>
+			<button_status name="tokillstatus">
+				<anchored to="tokilleffect" position="right" width="23" />
+			</button_status>
+			<basicnumber name="tokillinc">
+				<anchored to="tokillstatus" position="right" width="20" />
+			</basicnumber>
+			<button_killtostun name="tokillktostun">
+				<anchored to="tokillinc" position="right" width="40" offset="5,0" />
+				<center />
+				<text>K to S</text>
+			</button_killtostun>
+
+
+		<!-- left arm frame -->
+
+			<frame_char name="laframe">
+				<anchored to="toframe" position="left" width="167" />
+			</frame_char>
+
+			<labelnoheight name="latitle">
+				<anchored to="laframe" position="insidetopleft" width="167" height="20" offset="5,5" />
+				<center />
+				<font>reference-b-large</font>
+				<static>Left Arm Cur. and Inc.</static>
+			</labelnoheight>
+
+			<labelnoheight name="lastunl">
+				<anchored to="laframe" position="insidetopleft" width="20" height="20" offset="5,35" />
+				<center />
+				<static>S</static>
+			</labelnoheight>
+			<healthnumber name="lastun">
+				<anchored to="lastunl" position="right" width="20" />
+			</healthnumber>
+			<button_effects name="lastuneffect">
+				<anchored to="lastun" position="right" width="20" offset="5,0" />
+			</button_effects>
+			<button_status name="lastunstatus">
+				<anchored to="lastuneffect" position="right" width="23" />
+			</button_status>
+			<basicnumber name="lastuninc">
+				<anchored to="lastunstatus" position="right" width="20" />
+			</basicnumber>
+			<button_-1stun name="lastun-1">
+				<anchored to="lastuninc" position="right" offset="5,0" width="40" />
+				<center />
+				<text>-1 Stun</text>
+			</button_-1stun>
+			
+
+			<labelnoheight name="lakilll">
+				<anchored to="lastunl" position="below" height="20" offset="0,15" />
+				<center />
+				<static>K</static>
+			</labelnoheight>
+			<healthnumber name="lakill">
+				<anchored to="lakilll" position="right" width="20" />
+			</healthnumber>
+			<button_effects name="lakilleffect">
+				<anchored to="lakill" position="right" width="20" offset="5,0" />
+			</button_effects>
+			<button_status name="lakillstatus">
+				<anchored to="lakilleffect" position="right" width="23" />
+			</button_status>
+			<basicnumber name="lakillinc">
+				<anchored to="lakillstatus" position="right" width="20" />
+			</basicnumber>
+			<button_killtostun name="lakillktostun">
+				<anchored to="lakillinc" position="right" width="40" offset="5,0" />
+				<center />
+				<text>K to S</text>
+			</button_killtostun>
+
+			<!-- right arm frame -->
+
+			<frame_char name="raframe">
+				<anchored to="toframe" position="right" width="167" />
+			</frame_char>
+
+			<labelnoheight name="ratitle">
+				<anchored to="raframe" position="insidetopleft" width="167" height="20" offset="5,5" />
+				<center />
+				<font>reference-b-large</font>
+				<static>Right Arm Cur. and Inc.</static>
+			</labelnoheight>
+
+			<labelnoheight name="rastunl">
+				<anchored to="raframe" position="insidetopleft" width="20" height="20" offset="5,35" />
+				<center />
+				<static>S</static>
+			</labelnoheight>
+			<healthnumber name="rastun">
+				<anchored to="rastunl" position="right" width="20" />
+			</healthnumber>
+			<button_effects name="rastuneffect">
+				<anchored to="rastun" position="right" width="20" offset="5,0" />
+			</button_effects>
+			<button_status name="rastunstatus">
+				<anchored to="rastuneffect" position="right" width="23" />
+			</button_status>
+			<basicnumber name="rastuninc">
+				<anchored to="rastunstatus" position="right" width="20" />
+			</basicnumber>
+			<button_-1stun name="rastun-1">
+				<anchored to="rastuninc" position="right" offset="5,0" width="40" />
+				<center />
+				<text>-1 Stun</text>
+			</button_-1stun>
+			
+
+			<labelnoheight name="rakilll">
+				<anchored to="rastunl" position="below" height="20" offset="0,15" />
+				<center />
+				<static>K</static>
+			</labelnoheight>
+			<healthnumber name="rakill">
+				<anchored to="rakilll" position="right" width="20" />
+			</healthnumber>
+			<button_effects name="rakilleffect">
+				<anchored to="rakill" position="right" width="20" offset="5,0" />
+			</button_effects>
+			<button_status name="rakillstatus">
+				<anchored to="rakilleffect" position="right" width="23" />
+			</button_status>
+			<basicnumber name="rakillinc">
+				<anchored to="rakillstatus" position="right" width="20" />
+			</basicnumber>
+			<button_killtostun name="rakillktostun">
+				<anchored to="rakillinc" position="right" width="40" offset="5,0" />
+				<center />
+				<text>K to S</text>
+			</button_killtostun>
+
+			<!-- right leg frame -->
+
+			<frame_char name="rlframe">
+				<anchored to="raframe" position="below" height="100" />
+			</frame_char>
+
+			<labelnoheight name="rltitle">
+				<anchored to="rlframe" position="insidetopleft" width="167" height="20" offset="5,5" />
+				<center />
+				<font>reference-b-large</font>
+				<static>Right Leg Cur. and Inc.</static>
+			</labelnoheight>
+
+			<labelnoheight name="rlstunl">
+				<anchored to="rlframe" position="insidetopleft" width="20" height="20" offset="5,35" />
+				<center />
+				<static>S</static>
+			</labelnoheight>
+			<healthnumber name="rlstun">
+				<anchored to="rlstunl" position="right" width="20" />
+			</healthnumber>
+			<button_effects name="rlstuneffect">
+				<anchored to="rlstun" position="right" width="20" offset="5,0" />
+			</button_effects>
+			<button_status name="rlstunstatus">
+				<anchored to="rlstuneffect" position="right" width="23" />
+			</button_status>
+			<basicnumber name="rlstuninc">
+				<anchored to="rlstunstatus" position="right" width="20" />
+			</basicnumber>
+			<button_-1stun name="rlstun-1">
+				<anchored to="rlstuninc" position="right" offset="5,0" width="40" />
+				<center />
+				<text>-1 Stun</text>
+			</button_-1stun>
+			
+
+			<labelnoheight name="rlkilll">
+				<anchored to="rlstunl" position="below" height="20" offset="0,15" />
+				<center />
+				<static>K</static>
+			</labelnoheight>
+			<healthnumber name="rlkill">
+				<anchored to="rlkilll" position="right" width="20" />
+			</healthnumber>
+			<button_effects name="rlkilleffect">
+				<anchored to="rlkill" position="right" width="20" offset="5,0" />
+			</button_effects>
+			<button_status name="rlkillstatus">
+				<anchored to="rlkilleffect" position="right" width="23" />
+			</button_status>
+			<basicnumber name="rlkillinc">
+				<anchored to="rlkillstatus" position="right" width="20" />
+			</basicnumber>
+			<button_killtostun name="rlkillktostun">
+				<anchored to="rlkillinc" position="right" width="40" offset="5,0" />
+				<center />
+				<text>K to S</text>
+			</button_killtostun>
+
+			<!-- left leg frame -->
+
+			<frame_char name="llframe">
+				<anchored to="laframe" position="below" height="100" />
+			</frame_char>
+
+			<labelnoheight name="lltitle">
+				<anchored to="llframe" position="insidetopleft" width="167" height="20" offset="5,5" />
+				<center />
+				<font>reference-b-large</font>
+				<static>Left Leg Cur. and Inc.</static>
+			</labelnoheight>
+
+			<labelnoheight name="llstunl">
+				<anchored to="llframe" position="insidetopleft" width="20" height="20" offset="5,35" />
+				<center />
+				<static>S</static>
+			</labelnoheight>
+			<healthnumber name="llstun">
+				<anchored to="llstunl" position="right" width="20" />
+			</healthnumber>
+			<button_effects name="llstuneffect">
+				<anchored to="llstun" position="right" width="20" offset="5,0" />
+			</button_effects>
+			<button_status name="llstunstatus">
+				<anchored to="llstuneffect" position="right" width="23" />
+			</button_status>
+			<basicnumber name="llstuninc">
+				<anchored to="llstunstatus" position="right" width="20" />
+			</basicnumber>
+			<button_-1stun name="llstun-1">
+				<anchored to="llstuninc" position="right" offset="5,0" width="40" />
+				<center />
+				<text>-1 Stun</text>
+			</button_-1stun>
+			
+
+			<labelnoheight name="llkilll">
+				<anchored to="llstunl" position="below" height="20" offset="0,15" />
+				<center />
+				<static>K</static>
+			</labelnoheight>
+			<healthnumber name="llkill">
+				<anchored to="llkilll" position="right" width="20" />
+			</healthnumber>
+			<button_effects name="llkilleffect">
+				<anchored to="llkill" position="right" width="20" offset="5,0" />
+			</button_effects>
+			<button_status name="llkillstatus">
+				<anchored to="llkilleffect" position="right" width="23" />
+			</button_status>
+			<basicnumber name="llkillinc">
+				<anchored to="llkillstatus" position="right" width="20" />
+			</basicnumber>
+			<button_killtostun name="llkillktostun">
+				<anchored to="llkillinc" position="right" width="40" offset="5,0" />
+				<center />
+				<text>K to S</text>
+			</button_killtostun>
+
+		<!-- apply damage button -->
+
+		<button_text name="ApplyDamageButton">
+			<anchored to="toframe" position="below" offset="0,5" height="90" />
+			<center />
+			<text>Apply Damage</text>
+			<script>
+				function onButtonPress()
+					local rActor = ActorManager.getActor("pc", window.getDatabaseNode())
+					local sTargetType = rActor.sType
+					local nodeTarget = DB.findNode(rActor.sCreatureNode)
+					RMDamage.ApplyDamageButton(nodeTarget, sTargetType)
+
+				end
+			</script>
+		</button_text>
+
+		<!-- armour frame begins -->
+
+		<frame_char name="armourframe">
+			<bounds>20,305,500,180</bounds>
+		</frame_char>
+		<labelnoheight name="atitle">
+			<anchored to="armourframe" position="insidetopleft" offset="15,5" width="225" height="20" />
+			<center />
+			<static>ARMOUR</static>
+		</labelnoheight>
+		<labelnoheight name="hitloctitle">
+			<anchored to="atitle" position="right" width="120" />
+			<center />
+			<static>HIT LOC. COVERED</static>
+		</labelnoheight>
+		<labelnoheight name="chargestitle">
+			<center />
+			<anchored to="hitloctitle" position="right" width="80" />
+			<static>CHARGES</static>
+		</labelnoheight>
+		<labelnoheight name="infotitle">
+			<center />
+			<anchored to="chargestitle" position="right" width="40" offset="5,0" />
+			<static>INFO</static>
+		</labelnoheight>
+
+
+		<labelnoheight name="anametitle">
+			<anchored to="armourframe" position="insidetopleft" offset="15,25" width="225" />
+			<center />
+			<static>Armour Name</static>
+
+		</labelnoheight>
+		<labelnoheight name="hdTitle">
+			<anchored to="anametitle" position="right" width="20" offset="0,5" />
+			<center />
+			<static>HD</static>
+		</labelnoheight>
+		<labelnoheight name="toTitle">
+			<anchored to="hdTitle" position="right" width="20" />
+			<center />
+			<static>TO</static>
+		</labelnoheight>
+		<labelnoheight name="laTitle">
+			<anchored to="toTitle" position="right" width="20" />
+			<center />
+			<static>LA</static>
+		</labelnoheight>
+		<labelnoheight name="raTitle">
+			<anchored to="laTitle" position="right" width="20" />
+			<center />
+			<static>RA</static>
+		</labelnoheight>
+		<labelnoheight name="llTitle">
+			<anchored to="raTitle" position="right" width="20" />
+			<center />
+			<static>LL</static>
+		</labelnoheight>
+		<labelnoheight name="rlTitle">
+			<anchored to="llTitle" position="right" width="20" />
+			<center />
+			<static>RL</static>
+		</labelnoheight>
+
+		<labelnoheight name="curtitle">
+			<anchored to="rlTitle" position="right" width="30" offset="10,0" />
+			<static>CUR</static>
+		</labelnoheight>
+		<labelnoheight name="maxtitle">
+			<anchored to="curtitle" position="right" width="30" offset="10,0" />
+			<static>MAX</static>
+		</labelnoheight>
+
+		<!-- ARMOUR ROW 1 BEGINS -->
+
+		<stringfield name="Armour1">
+                <anchored to="anametitle" position="below" offset="0,5" height="20" />
+                <lineoffset default="on">1</lineoffset>
+		</stringfield>
+		
+		<button_checkbox name="Armour1hd">
+			<anchored to="Armour1" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour1to">
+			<anchored to="Armour1hd" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour1la">
+			<anchored to="Armour1to" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour1ra">
+			<anchored to="Armour1la" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour1ll">
+			<anchored to="Armour1ra" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour1rl">
+			<anchored to="Armour1ll" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+
+		<basicnumber name="Armour1CurCharge">
+				<anchored to="Armour1rl" position="right" width="30" offset="10,0" />
+		</basicnumber>
+		<basicnumber name="Armour1MaxCharge">
+				<anchored to="Armour1CurCharge" position="right" width="30" offset="10,0" />
+		</basicnumber>
+
+		<button_text name="Armour1Info">
+			<anchored to="Armour1MaxCharge" position="right" offset="5,0" width="40" />
+			<center />
+			<text>Donald</text>
+		</button_text>
+
+		<!-- ARMOUR ROW 2 BEGINS -->
+
+		<stringfield name="Armour2">
+                <anchored to="anametitle" position="below" height="20" offset="0,30" />
+                <lineoffset default="on">1</lineoffset>
+		</stringfield>
+		
+		<button_checkbox name="Armour2hd">
+			<anchored to="Armour2" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour2to">
+			<anchored to="Armour2hd" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour2la">
+			<anchored to="Armour2to" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour2ra">
+			<anchored to="Armour2la" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour2ll">
+			<anchored to="Armour2ra" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour2rl">
+			<anchored to="Armour2ll" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+
+		<basicnumber name="Armour2CurCharge">
+				<anchored to="Armour2rl" position="right" width="30" offset="10,0" />
+		</basicnumber>
+		<basicnumber name="Armour2MaxCharge">
+				<anchored to="Armour2CurCharge" position="right" width="30" offset="10,0" />
+		</basicnumber>
+
+		<button_text name="Armour2Info">
+			<anchored to="Armour2MaxCharge" position="right" offset="5,0" width="40" />
+			<center />
+			<text>Donald</text>
+		</button_text>
+
+		<!-- ARMOUR ROW 3 BEGINS -->
+
+		<stringfield name="Armour3">
+                <anchored to="anametitle" position="below" height="20" offset="0,55" />
+                <lineoffset default="on">1</lineoffset>
+		</stringfield>
+		
+		<button_checkbox name="Armour3hd">
+			<anchored to="Armour3" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour3to">
+			<anchored to="Armour3hd" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour3la">
+			<anchored to="Armour3to" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour3ra">
+			<anchored to="Armour3la" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour3ll">
+			<anchored to="Armour3ra" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour3rl">
+			<anchored to="Armour3ll" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+
+		<basicnumber name="Armour3CurCharge">
+				<anchored to="Armour3rl" position="right" width="30" offset="10,0" />
+		</basicnumber>
+		<basicnumber name="Armour3MaxCharge">
+				<anchored to="Armour3CurCharge" position="right" width="30" offset="10,0" />
+		</basicnumber>
+
+		<button_text name="Armour3Info">
+			<anchored to="Armour3MaxCharge" position="right" offset="5,0" width="40" />
+			<center />
+			<text>Donald</text>
+		</button_text>
+
+		<!-- ARMOUR ROW 4 BEGINS -->
+
+		<stringfield name="Armour4">
+                <anchored to="anametitle" position="below" height="20" offset="0,80" />
+                <lineoffset default="on">1</lineoffset>
+		</stringfield>
+		
+		<button_checkbox name="Armour4hd">
+			<anchored to="Armour4" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour4to">
+			<anchored to="Armour4hd" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour4la">
+			<anchored to="Armour4to" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour4ra">
+			<anchored to="Armour4la" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour4ll">
+			<anchored to="Armour4ra" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour4rl">
+			<anchored to="Armour4ll" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+
+		<basicnumber name="Armour4CurCharge">
+				<anchored to="Armour4rl" position="right" width="30" offset="10,0" />
+		</basicnumber>
+		<basicnumber name="Armour4MaxCharge">
+				<anchored to="Armour4CurCharge" position="right" width="30" offset="10,0" />
+		</basicnumber>
+
+		<button_text name="Armour4Info">
+			<anchored to="Armour4MaxCharge" position="right" offset="5,0" width="40" />
+			<center />
+			<text>Donald</text>
+		</button_text>
+
+		<!-- ARMOUR ROW 5 BEGINS -->
+
+		<stringfield name="Armour5">
+                <anchored to="anametitle" position="below" height="20" offset="0,105" />
+                <lineoffset default="on">1</lineoffset>
+		</stringfield>
+		
+		<button_checkbox name="Armour5hd">
+			<anchored to="Armour5" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour5to">
+			<anchored to="Armour5hd" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour5la">
+			<anchored to="Armour5to" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour5ra">
+			<anchored to="Armour5la" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour5ll">
+			<anchored to="Armour5ra" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+		<button_checkbox name="Armour5rl">
+			<anchored to="Armour5ll" position="right" offset="0,0" width="20" />
+		</button_checkbox>
+
+		<basicnumber name="Armour5CurCharge">
+				<anchored to="Armour5rl" position="right" width="30" offset="10,0" />
+		</basicnumber>
+		<basicnumber name="Armour5MaxCharge">
+				<anchored to="Armour5CurCharge" position="right" width="30" offset="10,0" />
+		</basicnumber>
+
+		<button_text name="Armour5Info">
+			<anchored to="Armour5MaxCharge" position="right" offset="5,0" width="40" />
+			<center />
+			<text>Donald</text>
+		</button_text>
+
+		
+
+		<frame_char name="humanityframe">
+			<bounds>20,485,330,180</bounds>
+		</frame_char>
+
+		<!-- top row -->
+		
+		<label name="HumanityL">
+			<anchored to="humanityframe" position="insidetopleft" width="75" height="44" offset="6,5"  />
+			<center />
+			<font>reference-b-large</font>
+			<static>Threats</static>
+		</label>
+		<genericcontrol>
+			<anchored to="HumanityL" position="right" width="50" />
+		</genericcontrol>
+		<labelnoheight name="CrackFightL">
+			<anchored to="humanityframe" position="insidetopleft" offset="130,5" width="10" height="22" />
+			<static>Fi</static>
+		</labelnoheight>
+		<labelnoheight name="CrackFlightL">
+			<anchored to="CrackFightL" position="right" width="10" />
+			<static>Fl</static>
+		</labelnoheight>
+		<labelnoheight name="CrackFreezeL">
+			<anchored to="CrackFlightL" position="right" width="10" />
+			<static>Fr</static>
+		</labelnoheight>
+
+
+		<button_checkbox name="CrackFight">
+			<anchored to="CrackFightL" position="below" height="22" />
+		</button_checkbox>
+		<button_checkbox name="CrackFlight">
+			<anchored to="CrackFlightL" position="below" height="22" />
+		</button_checkbox>
+		<button_checkbox name="CrackFreeze">
+			<anchored to="CrackFreezeL" position="below" height="22" />
+		</button_checkbox>
+
+
+		<!-- humanity tracks -->
+
+		<label name="Detachment">
+			<anchored to="HumanityL" position="below" height="42" />
+			<static>Detachment</static>
+		</label>
+		<label name="Trauma">
+			<anchored to="Detachment" position="below" height="42" />
+			<static>Trauma</static>
+		</label>
+		<label name="Stress">
+			<anchored to="Trauma" position="below" height="42" />
+			<static>Stress</static>
+		</label>
+		
+		<button_checkbox name="D1">
+			<anchored to="Detachment" position="right" width="10" />
+		</button_checkbox>
+		<button_checkbox name="D2">
+			<anchored to="Detachment" position="right" width="10" offset="10,0" />
+		</button_checkbox>
+		<button_checkbox name="D3">
+			<anchored to="Detachment" position="right" width="10" offset="20,0" />
+		</button_checkbox>
+		<button_checkbox name="D4">
+			<anchored to="Detachment" position="right" width="10" offset="30,0" />
+		</button_checkbox>
+		<button_checkbox name="D5">
+			<anchored to="Detachment" position="right" width="10" offset="40,0" />
+		</button_checkbox>
+
+		<button_checkbox name="D6">
+			<anchored to="Detachment" position="right" width="10" offset="81,0" />
+		</button_checkbox>
+		<button_checkbox name="D7">
+			<anchored to="Detachment" position="right" width="10" offset="91,0" />
+		</button_checkbox>
+		<button_checkbox name="D8">
+			<anchored to="Detachment" position="right" width="10" offset="101,0" />
+		</button_checkbox>
+		<button_checkbox name="D9">
+			<anchored to="Detachment" position="right" width="10" offset="111,0" />
+		</button_checkbox>
+		<button_checkbox name="D10">
+			<anchored to="Detachment" position="right" width="10" offset="121,0" />
+		</button_checkbox>
+
+		<button_checkbox name="D11">
+			<anchored to="Detachment" position="right" width="10" offset="161,0" />
+		</button_checkbox>
+		<button_checkbox name="D12">
+			<anchored to="Detachment" position="right" width="10" offset="171,0" />
+		</button_checkbox>
+		<button_checkbox name="D13">
+			<anchored to="Detachment" position="right" width="10" offset="181,0" />
+		</button_checkbox>
+		<button_checkbox name="D14">
+			<anchored to="Detachment" position="right" width="10" offset="191,0" />
+		</button_checkbox>
+		<button_checkbox name="D15">
+			<anchored to="Detachment" position="right" width="10" offset="201,0" />
+		</button_checkbox>
+
+
+		<button_checkbox name="T1">
+			<anchored to="Trauma" position="right" width="10" />
+		</button_checkbox>
+		<button_checkbox name="T2">
+			<anchored to="Trauma" position="right" width="10" offset="10,0" />
+		</button_checkbox>
+		<button_checkbox name="T3">
+			<anchored to="Trauma" position="right" width="10" offset="20,0" />
+		</button_checkbox>
+		<button_checkbox name="T4">
+			<anchored to="Trauma" position="right" width="10" offset="30,0" />
+		</button_checkbox>
+		<button_checkbox name="T5">
+			<anchored to="Trauma" position="right" width="10" offset="40,0" />
+		</button_checkbox>
+
+		<button_checkbox name="T6">
+			<anchored to="Trauma" position="right" width="10" offset="81,0" />
+		</button_checkbox>
+		<button_checkbox name="T7">
+			<anchored to="Trauma" position="right" width="10" offset="91,0" />
+		</button_checkbox>
+		<button_checkbox name="T8">
+			<anchored to="Trauma" position="right" width="10" offset="101,0" />
+		</button_checkbox>
+		<button_checkbox name="T9">
+			<anchored to="Trauma" position="right" width="10" offset="111,0" />
+		</button_checkbox>
+		<button_checkbox name="T10">
+			<anchored to="Trauma" position="right" width="10" offset="121,0" />
+		</button_checkbox>
+
+		<button_checkbox name="T11">
+			<anchored to="Trauma" position="right" width="10" offset="161,0" />
+		</button_checkbox>
+		<button_checkbox name="T12">
+			<anchored to="Trauma" position="right" width="10" offset="171,0" />
+		</button_checkbox>
+		<button_checkbox name="T13">
+			<anchored to="Trauma" position="right" width="10" offset="181,0" />
+		</button_checkbox>
+		<button_checkbox name="T14">
+			<anchored to="Trauma" position="right" width="10" offset="191,0" />
+		</button_checkbox>
+		<button_checkbox name="T15">
+			<anchored to="Trauma" position="right" width="10" offset="201,0" />
+		</button_checkbox>
+		
+
+		<button_checkbox name="S1">
+			<anchored to="Stress" position="right" width="10" />
+		</button_checkbox>
+		<button_checkbox name="S2">
+			<anchored to="Stress" position="right" width="10" offset="10,0" />
+		</button_checkbox>
+		<button_checkbox name="S3">
+			<anchored to="Stress" position="right" width="10" offset="20,0" />
+		</button_checkbox>
+		<button_checkbox name="S4">
+			<anchored to="Stress" position="right" width="10" offset="30,0" />
+		</button_checkbox>
+		<button_checkbox name="S5">
+			<anchored to="Stress" position="right" width="10" offset="40,0" />
+		</button_checkbox>
+
+		<button_checkbox name="S6">
+			<anchored to="Stress" position="right" width="10" offset="81,0" />
+		</button_checkbox>
+		<button_checkbox name="S7">
+			<anchored to="Stress" position="right" width="10" offset="91,0" />
+		</button_checkbox>
+		<button_checkbox name="S8">
+			<anchored to="Stress" position="right" width="10" offset="101,0" />
+		</button_checkbox>
+		<button_checkbox name="S9">
+			<anchored to="Stress" position="right" width="10" offset="111,0" />
+		</button_checkbox>
+		<button_checkbox name="S10">
+			<anchored to="Stress" position="right" width="10" offset="121,0" />
+		</button_checkbox>
+
+		<button_checkbox name="S11">
+			<anchored to="Stress" position="right" width="10" offset="161,0" />
+		</button_checkbox>
+		<button_checkbox name="S12">
+			<anchored to="Stress" position="right" width="10" offset="171,0" />
+		</button_checkbox>
+		<button_checkbox name="S13">
+			<anchored to="Stress" position="right" width="10" offset="181,0" />
+		</button_checkbox>
+		<button_checkbox name="S14">
+			<anchored to="Stress" position="right" width="10" offset="191,0" />
+		</button_checkbox>
+		<button_checkbox name="S15">
+			<anchored to="Stress" position="right" width="10" offset="201,0" />
+		</button_checkbox>
+
+		<!-- regrets -->
+
+		<genericcontrol>
+			<anchored to="humanityframe" position="insidetopleft"  offset="131,49" width="31" height="126"/>
+			<icon>icon_crack</icon>
+		</genericcontrol>
+		<genericcontrol>
+			<anchored to="humanityframe" position="insidetopleft"  offset="212,49" width="31" height="126"/>
+			<icon>icon_crumble</icon>
+		</genericcontrol>
+		<genericcontrol>
+			<anchored to="humanityframe" position="insidetopleft"  offset="293,49" width="31" height="126"/>
+			<icon>icon_break</icon>
+		</genericcontrol>
+
+
+
+		</sheetdata>
+	</windowclass>
+</root>

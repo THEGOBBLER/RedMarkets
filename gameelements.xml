@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+  	<die name="r10">
+		<model>d10</model>
+		<icon>d10ricon</icon>
+	</die>
+
+
+	<die name="dF" merge="delete" />
+	<die name="d4">
+		<icon>d4icon</icon>
+		<position>550,-68</position>
+	</die>
+	<die name="d6">
+		<icon>d6icon</icon>
+		<position>500,-68</position>
+	</die>
+	<die name="d8">
+		<icon>d8icon</icon>
+		<position>450,-68</position>
+	</die>
+	<die name="d10">
+		<icon>d10icon</icon>
+		<position>400,-68</position>
+	</die>
+	<die name="d12">
+		<icon>d12icon</icon>
+		<position>350,-68</position>
+	</die>
+	<die name="d20">
+		<icon>d20icon</icon>
+		<position>300,-68</position>
+	</die>
+	<die name="d100">
+		<icon>d10icon</icon>
+	</die>
+
+	</root>

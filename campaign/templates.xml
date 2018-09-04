@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<root>
+
+<template name="skillnumber">
+	<numberfield name="skillnumbernumber">
+		<anchored height="20" width="20" />
+		<font>reference-b-large</font>
+		<nodrag />
+		<nodrop />
+		<noreset />
+	</numberfield>
+</template>
+
+<template name="accountingnumber">
+	<basicnumber>
+		<center />
+		<nodrop />
+		<noreset />
+		<nokeyedit />
+		<script>
+			function onWheel()
+				return true
+			end
+		</script>
+	</basicnumber>
+</template>
+
+	<font name="skillsuccess">
+		<fgffile name="graphics/fonts/regular-10.fgf" />
+		<ttf file="graphics/fonts/Candara.ttf" name="Candara SDF" size="15" />
+		<color value="#000000" />
+	</font>
+
+		<font name="skillfailure">
+		<fgffile name="graphics/fonts/regular-10.fgf" />
+		<ttf file="graphics/fonts/Candara.ttf" name="Candara SDF" size="15" />
+		<color value="#FF0000" />
+	</font>
+
+	<template name="button_plus">
+		<buttonfield>
+			<icon normal="button_plus" pressed="button_plus_down" />
+		</buttonfield>
+	</template>
+
+	<template name="button_minus">
+		<buttonfield>
+			<icon normal="button_minus" pressed="button_minus_down" />
+		</buttonfield>
+	</template>
+
+	<template name="button_refresh">
+		<buttonfield>
+			<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
+			<script>
+			function onButtonPress()
+				local nodeItem = window.getDatabaseNode()
+				local nodeTarget = nodeItem.getParent().getParent()
+				Debug.console(nodeTarget)
+
+				RMItem.refreshItem(nodeItem, nodeTarget)
+			end
+		</script>
+			<icon normal="button_plus" pressed="button_plus_down" />
+		</buttonfield>
+	</template>
+
+	<template name="button_roll">
+		<buttoncontrol>
+			<icon normal="button_roll" pressed="button_roll_down" />
+		</buttoncontrol>
+	</template>
+
+<template name="button_iconcyclera">
+	<genericcontrol>
+		<script file="scripts/button_iconcycler.lua" />
+	</genericcontrol>
+</template>
+
+<template name="button_effects">
+	<button_iconcyclera>
+		<parameters>
+			<icons>icon_blank|icon_hobbled|icon_winged|icon_gassed|icon_unconscious|icon_lamed|icon_maimed|icon_dead</icons>
+			<values>icon_blank|icon_hobbled|icon_winged|icon_gassed|icon_unconscious|icon_lamed|icon_maimed|icon_dead</values>
+			<tooltips>Fine|Hobbled|Winged|Gassed|Unconscious|Lamed|Maimed|Dead</tooltips>
+			<defaulttooltip>Fine</defaulttooltip>
+			<defaulticon>icon_blank</defaulticon>	
+		</parameters>
+	<readonly />
+	</button_iconcyclera>
+</template>
+
+<template name="button_status">
+	<button_iconcyclera>
+		<anchored />
+		<parameters>
+			<icons>icon_health_100|icon_health_90|icon_health_80|icon_health_60|icon_health_40|icon_health_20|icon_health_0</icons>
+			<values>icon_health_100|icon_health_90|icon_health_80|icon_health_60|icon_health_40|icon_health_20|icon_health_0</values>
+			<tooltips>100|90|80|60|40|20|0</tooltips>
+			<defaulttooltip>icon_health_100</defaulttooltip>
+			<defaulticon>icon_health_100</defaulticon>	
+		</parameters>
+	<readonly />
+	</button_iconcyclera>
+</template>
+
+<template name="healthnumber">
+	<basicnumber>
+		<min>0</min>
+		<script>
+			function onValueChanged()
+				local name = self.getName()
+				local damage = self.getValue()
+				local nodeTarget = window.getDatabaseNode()
+
+				RMDamage.HandleHealthIcon(nodeTarget, name, damage)
+			end
+		</script>
+	</basicnumber>
+</template>
+
+	<template name="button_defroll">
+		<buttonfield>
+			<state frame="buttonup" frameoffset="5,5,5,5" />
+			<state frame="buttondown" frameoffset="5,5,5,5" offset="1,1" />
+			<font>button-white</font>
+		</buttonfield>
+	</template>
+
+	<template name="button_rationskill">
+		<buttonfield>
+			<state frame="buttonup" frameoffset="5,5,5,5" />
+			<state frame="buttondown" frameoffset="5,5,5,5" offset="1,1" />
+			<font>button-white</font>
+		</buttonfield>
+	</template>
+
+	<template name="labelnoheight">
+		<stringcontrol>
+			<font>sheetlabel</font>
+			<nodrag />
+			<readonly />
+		</stringcontrol>
+	</template>
+
+	<template name="button_killtostun">
+		<button_text>
+			<script>
+				function onButtonPress()
+					local nodeTarget = window.getDatabaseNode()
+					local hitloc = self.getName():match("(%l%l)")
+
+					RMDamage.KillToStun(nodeTarget, hitloc)
+
+				end
+			</script>
+		</button_text>
+	</template>
+
+	<template name="button_-1stun">
+		<button_text>
+			<script>
+				function onButtonPress()
+					local nodeTarget = window.getDatabaseNode()
+					local hitloc = self.getName():match("(%l%l)")
+
+					RMDamage.MinusOneStun(nodeTarget, hitloc)
+
+				end
+			</script>
+		</button_text>
+	</template>
+
+	<template name="button_bank">
+		<buttonfield>
+			<icon normal="button_action_bank" pressed="button_action_bank_down" />
+		</buttonfield>
+	</template>
+
+	<template name="button_retirement">
+		<buttonfield>
+			<icon normal="button_plus" pressed="button_plus_down" />
+		</buttonfield>
+	</template>
+
+	<template name="button_hand">
+		<buttonfield>
+			<icon normal="button_plus" pressed="button_plus_down" />
+		</buttonfield>
+	</template>
+
+
+</root>

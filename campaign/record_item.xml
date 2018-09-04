@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="item">
+		<frame>recordsheet</frame>
+		<placement>
+			<size width="350" height="400" />
+		</placement>
+		<sizelimits>
+			<minimum width="350" height="400" />
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_item</minimize>
+		<nodelete />
+		<playercontrol />
+		<sharable />
+		<tooltip field="name" />
+		<script file="campaign/scripts/item.lua" />
+		<sheetdata>
+			<sub_record_header name="header">
+				<class>item_header</class>
+			</sub_record_header>
+
+			<frame_record_content name="contentframe" />
+
+			<subwindow_record name="main">
+				<class>item_main</class>
+				<activate />
+			</subwindow_record>
+
+			<scrollbar_record>
+				<target>main</target>
+			</scrollbar_record>
+
+			<resize_recordsheet />
+			<close_recordsheet />
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="item_header">
+		<margins control="0,0,0,7" />
+		<script>
+			function onInit()
+				update();
+			end
+			function update()
+				local nodeRecord = getDatabaseNode();
+
+				local bReadOnly = WindowManager.getReadOnlyState(nodeRecord);
+				name.setReadOnly(bReadOnly);
+				nonid_name.setReadOnly(bReadOnly);
+
+				local bID = LibraryData.getIDState("item", nodeRecord);
+				name.setVisible(bID);
+				nonid_name.setVisible(not bID);
+			end
+		</script>
+		<sheetdata>
+			<link_record_header_id name="link">
+				<class>item</class>
+			</link_record_header_id>
+
+			<anchor_record_header_right name="rightanchor" />
+			<button_record_isidentified name="isidentified" />
+			<icon_record_locked />
+			<button_record_locked />
+			
+			<string_record_name_id name="name">
+				<empty textres="library_recordtype_empty_item" />
+			</string_record_name_id>
+			<string_record_name_id name="nonid_name">
+				<empty textres="library_recordtype_empty_nonid_item" />
+			</string_record_name_id>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="item_main">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/item_main.lua" />
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<label_column name="nonid_name_label">
+				<static textres="item_label_unidentified" />
+			</label_column>
+			<string_columnh name="nonid_name" />
+			
+			<label_column name="nonid_notes_label">
+				<static textres="item_label_unidentifiednotes" />
+			</label_column>
+			<string_columnh name="nonid_notes" />
+
+			<line_column name="divider" />
+
+			<label_column name="upkeep_label">
+				<static>Upkeep</static>
+			</label_column>
+			<number_columnh name="upkeep" />
+			<button_defroll name="noupkeep">
+			<anchored to="upkeep" position="right" width="60" offset="10,0"/>
+			<text>No upkeep</text>
+			</button_defroll>
+
+			<label_column name="curcharges_label">
+				<static>Cur Charges</static>
+			</label_column>
+			<number_columnh name="curcharges" />
+
+			<label_column name="maxcharges_label">
+				<static>Max Charges</static>
+			</label_column>
+			<number_columnh name="maxcharges" />
+
+			<line_column name="divider2" />
+
+			<label_column name="range_label">
+				<static>Range</static>
+			</label_column>
+			<string_columnh name="range" />
+
+			<label_column name="damagetype_label">
+				<static>Damage</static>
+			</label_column>
+			<button_defroll name="killdamage">
+			<anchored width="20" height="20">
+				<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+				<left offset="97" />
+			</anchored>
+			<text>K+</text>
+			</button_defroll>
+			<basicnumber name="extrakill">
+				<anchored to="killdamage" position="right" width="20" offset="7" />
+			</basicnumber>
+			<button_defroll name="stundamage">
+				<anchored to="extrakill" position="right" width="20" offset="7" />
+				<text>S+</text>
+			</button_defroll>
+			<basicnumber name="extrastun">
+				<anchored to="stundamage" position="right" width="20" offset="7" />
+			</basicnumber>
+
+
+			<line_column name="divider3" />
+
+			<label_column name="linkedskill_label">
+				<static>Skill Used?</static>
+			</label_column>
+			<string_columnh name="linkedskill" />
+
+			<label_column name="qualities_label">
+				<static>Qualities/Upgrades</static>
+			</label_column>
+			<string_columnh name="qualities" />
+
+			<line_column name="divider4" />
+
+			<ft_columnh name="notes" />
+		</sheetdata>
+	</windowclass>
+</root>

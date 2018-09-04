@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_main" merge="delete" />
+	<windowclass name="charsheet_main">
+		<sheetdata>
+			<!-- Overview -->
+			<frame_char name="infoframe">
+				<bounds>20,5,500,125</bounds>
+			</frame_char>
+            
+            <string_labeled name="age">
+                <anchored to="infoframe" position="insidetopleft" offset="15,12" height="20" width="35" />
+				<label>age</label>
+			</string_labeled>
+			<string_labeled name="gender">
+				<anchored to="age" position="right" offset="10,0" width="50" />
+				<label>gender</label>
+			</string_labeled>
+			<string_labeled name="height">
+				<anchored to="gender" position="right" offset="10,0" width="50" />
+				<label>height</label>
+			</string_labeled>
+			<string_labeled name="weight">
+				<anchored to="height" position="right" offset="10,0" width="50" />
+				<label>weight</label>
+			</string_labeled>
+			<string_labeled name="crew">
+				<anchored to="weight" position="right" offset="10,0" width="250" />
+				<label>crew</label>
+			</string_labeled>
+			<string_labeled name="weakspot">
+                <anchored to="infoframe" position="insidetopleft" offset="15,41" height="20" width="475" />
+				<label>weak spot</label>
+			</string_labeled>
+			<string_labeled name="softspot">
+                <anchored to="infoframe" position="insidetopleft" offset="15,66" height="20" width="475" />
+				<label>soft spot</label>
+			</string_labeled>
+			<string_labeled name="toughspot">
+                <anchored to="infoframe" position="insidetopleft" offset="15,91" height="20" width="475" />
+				<label>tough spot</label>
+			</string_labeled>
+            
+			<!-- Dependants -->
+			<frame_char name="dependantsframe">
+				<bounds>20,135,500,160</bounds>
+			</frame_char>
+			<label name="dependantstitle">
+				<anchored to="dependantsframe" position="insidetopleft" offset="10,10" width="275"/>
+				<font>reference-b-large</font>
+				<center />
+				<static>Dependant</static>
+			</label>
+			<label name="needytitle">
+				<anchored to="dependantsframe" position="insidetopleft" offset="300,10" width="50"/>
+				<center />
+				<static>Needy</static>
+			</label>
+			<label name="strainedtitle">
+				<anchored to="dependantsframe" position="insidetopleft" offset="360,10" width="50"/>
+				<center />
+				<static>Strained</static>
+			</label>
+			<label name="severedtitle">
+				<anchored to="dependantsframe" position="insidetopleft" offset="420,10" width="50"/>
+				<center />
+				<static>Severed</static>
+			</label>
+            
+            <stringfield name="Dependant1">
+                <anchored to="dependantsframe" position="insidetopleft" offset="10,30" height="20" width="275" />
+                <lineoffset default="on">1</lineoffset>
+			</stringfield>
+			<button_checkbox name="D1Needy">
+			<anchored to="needytitle" position="below" offset="0,0" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="D1Strained">
+			<anchored to="strainedtitle" position="below" offset="0,0" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="D1Severed">
+			<anchored to="severedtitle" position="below" offset="0,0" height="20"  />
+			</button_checkbox>
+ 			
+ 			<stringfield name="Dependant2">
+                <anchored to="dependantsframe" position="insidetopleft" offset="10,50" height="20" width="275" />
+                <lineoffset default="on">1</lineoffset>
+			</stringfield>
+			<button_checkbox name="D2Needy">
+			<anchored to="needytitle" position="below" offset="0,20" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="D2Strained">
+			<anchored to="strainedtitle" position="below" offset="0,20" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="D2Severed">
+			<anchored to="severedtitle" position="below" offset="0,20" height="20"  />
+			</button_checkbox>
+
+			<stringfield name="Dependant3">
+                <anchored to="dependantsframe" position="insidetopleft" offset="10,70" height="20" width="275" />
+                <lineoffset default="on">1</lineoffset>
+			</stringfield>
+			<button_checkbox name="D3Needy">
+			<anchored to="needytitle" position="below" offset="0,40" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="D3Strained">
+			<anchored to="strainedtitle" position="below" offset="0,40" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="D3Severed">
+			<anchored to="severedtitle" position="below" offset="0,40" height="20"  />
+			</button_checkbox>
+
+			<stringfield name="Dependant4">
+                <anchored to="dependantsframe" position="insidetopleft" offset="10,90" height="20" width="275" />
+                <lineoffset default="on">1</lineoffset>
+			</stringfield>
+			<button_checkbox name="D4Needy">
+			<anchored to="needytitle" position="below" offset="0,60" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="D4Strained">
+			<anchored to="strainedtitle" position="below" offset="0,60" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="D4Severed">
+			<anchored to="severedtitle" position="below" offset="0,60" height="20"  />
+			</button_checkbox>
+
+			<stringfield name="Dependant5">
+                <anchored to="dependantsframe" position="insidetopleft" offset="10,110" height="20" width="275" />
+                <lineoffset default="on">1</lineoffset>
+			</stringfield>
+			<button_checkbox name="D5Needy">
+			<anchored to="needytitle" position="below" offset="0,80" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="D5Strained">
+			<anchored to="strainedtitle" position="below" offset="0,80" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="D5Severed">
+			<anchored to="severedtitle" position="below" offset="0,80" height="20"  />
+			</button_checkbox>
+
+			<stringfield name="Dependant6">
+                <anchored to="dependantsframe" position="insidetopleft" offset="10,130" height="20" width="275" />
+                <lineoffset default="on">1</lineoffset>
+			</stringfield>
+			<button_checkbox name="D6Needy">
+			<anchored to="needytitle" position="below" offset="0,100" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="D6Strained">
+			<anchored to="strainedtitle" position="below" offset="0,100" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="D6Severed">
+			<anchored to="severedtitle" position="below" offset="0,100" height="20"  />
+			</button_checkbox>
+
+			<!-- References -->
+			<frame_char name="referencesframe">
+				<bounds>20,305,500,160</bounds>
+			</frame_char>
+			<label name="referencestitle">
+				<anchored to="referencesframe" position="insidetopleft" offset="10,10" width="275"/>
+				<font>reference-b-large</font>
+				<center />
+				<static>Reference</static>
+			</label>
+			<label name="needytitleR">
+				<anchored to="referencesframe" position="insidetopleft" offset="300,10" width="50"/>
+				<center />
+				<static>Needy</static>
+			</label>
+			<label name="strainedtitleR">
+				<anchored to="referencesframe" position="insidetopleft" offset="360,10" width="50"/>
+				<center />
+				<static>Strained</static>
+			</label>
+			<label name="severedtitleR">
+				<anchored to="referencesframe" position="insidetopleft" offset="420,10" width="50"/>
+				<center />
+				<static>Severed</static>
+			</label>
+            
+            <stringfield name="Reference1">
+                <anchored to="referencesframe" position="insidetopleft" offset="10,30" height="20" width="275" />
+                <lineoffset default="on">1</lineoffset>
+			</stringfield>
+			<button_checkbox name="R1Needy">
+			<anchored to="needytitleR" position="below" offset="0,0" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="R1Strained">
+			<anchored to="strainedtitleR" position="below" offset="0,0" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="R1Severed">
+			<anchored to="severedtitleR" position="below" offset="0,0" height="20"  />
+			</button_checkbox>
+ 			
+ 			<stringfield name="Reference2">
+                <anchored to="referencesframe" position="insidetopleft" offset="10,50" height="20" width="275" />
+                <lineoffset default="on">1</lineoffset>
+			</stringfield>
+			<button_checkbox name="R2Needy">
+			<anchored to="needytitleR" position="below" offset="0,20" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="R2Strained">
+			<anchored to="strainedtitleR" position="below" offset="0,20" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="R2Severed">
+			<anchored to="severedtitleR" position="below" offset="0,20" height="20"  />
+			</button_checkbox>
+
+			<stringfield name="Reference3">
+                <anchored to="referencesframe" position="insidetopleft" offset="10,70" height="20" width="275" />
+                <lineoffset default="on">1</lineoffset>
+			</stringfield>
+			<button_checkbox name="R3Needy">
+			<anchored to="needytitleR" position="below" offset="0,40" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="R3Strained">
+			<anchored to="strainedtitleR" position="below" offset="0,40" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="R3Severed">
+			<anchored to="severedtitleR" position="below" offset="0,40" height="20"  />
+			</button_checkbox>
+
+			<stringfield name="Reference4">
+                <anchored to="referencesframe" position="insidetopleft" offset="10,90" height="20" width="275" />
+                <lineoffset default="on">1</lineoffset>
+			</stringfield>
+			<button_checkbox name="R4Needy">
+			<anchored to="needytitleR" position="below" offset="0,60" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="R4Strained">
+			<anchored to="strainedtitleR" position="below" offset="0,60" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="R4Severed">
+			<anchored to="severedtitleR" position="below" offset="0,60" height="20"  />
+			</button_checkbox>
+
+			<stringfield name="Reference5">
+                <anchored to="referencesframe" position="insidetopleft" offset="10,110" height="20" width="275" />
+                <lineoffset default="on">1</lineoffset>
+			</stringfield>
+			<button_checkbox name="R5Needy">
+			<anchored to="needytitleR" position="below" offset="0,80" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="R5Strained">
+			<anchored to="strainedtitleR" position="below" offset="0,80" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="R5Severed">
+			<anchored to="severedtitleR" position="below" offset="0,80" height="20"  />
+			</button_checkbox>
+
+			<stringfield name="Reference6">
+                <anchored to="referencesframe" position="insidetopleft" offset="10,130" height="20" width="275" />
+                <lineoffset default="on">1</lineoffset>
+			</stringfield>
+			<button_checkbox name="R6Needy">
+			<anchored to="needytitleR" position="below" offset="0,100" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="R6Strained">
+			<anchored to="strainedtitleR" position="below" offset="0,100" height="20"  />
+			</button_checkbox>
+			<button_checkbox name="R6Severed">
+			<anchored to="severedtitleR" position="below" offset="0,100" height="20"  />
+			</button_checkbox>
+
+			<!-- Retirement -->
+
+			<frame_char name="retirementframe">
+				<bounds>20,475,500,160</bounds>
+			</frame_char>
+			<label name="retirementtitle">
+				<anchored to="retirementframe" position="insidetopleft" offset="10,10" width="375"/>
+				<font>reference-b-large</font>
+				<center />
+				<static>Milestone</static>
+			</label>
+			<label name="bountymilestonel">
+				<anchored to="retirementframe" position="insidetopleft" offset="400,10" width="50"/>
+				<center />
+				<static>Bounty</static>
+			</label>
+			<basicnumber name="bountypermilestone">
+				<anchored to="bountymilestonel" position="right" offset="5,0" width="20"/>
+				<default>20</default>
+				<min>0</min>
+			</basicnumber>			
+
+            <stringcontrol name="Milestone1">
+                <anchored to="retirementtitle" position="below" offset="0,5" height="20"/>
+                <lineoffset default="on">1</lineoffset>
+			</stringcontrol>
+			<basicnumber name="M1Bounty">
+			<anchored to="bountymilestonel" position="below" offset="0,5" height="20"  />
+			<min>0</min>
+			</basicnumber>
+
+			<stringcontrol name="Milestone2">
+                <anchored to="Milestone1" position="below" offset="0,5" height="20"/>
+                <lineoffset default="on">1</lineoffset>
+			</stringcontrol>
+			<basicnumber name="M2Bounty">
+			<anchored to="M1Bounty" position="below" offset="0,5" height="20"  />
+			<min>0</min>
+			</basicnumber>
+
+			<stringcontrol name="Milestone3">
+                <anchored to="Milestone2" position="below" offset="0,5" height="20"/>
+                <lineoffset default="on">1</lineoffset>
+			</stringcontrol>
+			<basicnumber name="M3Bounty">
+			<anchored to="M2Bounty" position="below" offset="0,5" height="20"  />
+			<min>0</min>
+			</basicnumber>
+
+			<stringcontrol name="Milestone4">
+                <anchored to="Milestone3" position="below" offset="0,5" height="20"/>
+                <lineoffset default="on">1</lineoffset>
+			</stringcontrol>
+			<basicnumber name="M4Bounty">
+			<anchored to="M3Bounty" position="below" offset="0,5" height="20"  />
+			<min>0</min>
+			</basicnumber>
+
+
+ 						
+            
+			
+		</sheetdata>
+	</windowclass>
+</root>

@@ -1,0 +1,794 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_skills">
+		<!--<script file="campaign/scripts/char_main.lua" />-->
+		<sheetdata>
+
+			<frame_char name="titleframe">
+				<bounds>20,0,500,40</bounds>
+			</frame_char>
+			<label name="skillslabel">
+				<anchored to="titleframe" position="insidetop" offset="0,10" />
+				<center />
+				<font>reference-b-large</font>
+				<static>SKILLS</static>
+			</label>
+
+			<label name="combatroll">
+				<anchored to="titleframe" position="insidetopleft" offset="20,10" />
+				<center />
+				<font>reference-b-large</font>
+				<static>Combat Roll:</static>
+			</label>
+
+			<button_defroll name="skillsslabel">
+				<anchored to="combatroll" position="right" width="20" offset="10,0" />
+				<center />
+				<text>S+</text>
+			</button_defroll>
+			<basicnumber name="extrastun">
+				<anchored to="skillsslabel" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+
+			<button_defroll name="skillsklabel">
+				<anchored to="extrastun" position="right" width="20" offset="10,0" />
+				<center />
+				<text>K+</text>
+			</button_defroll>
+			<basicnumber name="extrakill">
+				<anchored to="skillsklabel" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+
+			<!-- right side header stuff -->
+
+			<labelnoheight name="rationchargel">
+				<anchored to="titleframe" position="insidetopright" width="40" height="20" offset="80,10" />
+				<static>Rations:</static>
+				<center/>
+			</labelnoheight>
+			<basicnumber name="rations">
+				<anchored to="rationchargel" position="right" width="20" offset="5,0" />
+				<min>0</min>
+				<default>10</default>
+			</basicnumber>
+			<buttoncontrol name="refreshrations">
+				<anchored to="rations" position="right" offset="0,5" width="20" />
+				<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
+				<script>
+					function onButtonPress()
+						local sheet = window.getDatabaseNode()
+						local refresh = sheet.getChild("refreshcurnumber")
+						local currefresh = refresh.getValue()
+						local rationcharge = sheet.getChild("rations")
+
+						if currefresh > 0 then
+							refresh.setValue(currefresh - 1)
+							rationcharge.setValue(10)
+						end
+					end
+				</script>
+			</buttoncontrol>
+			<button_plus name="spendaration">
+				<anchored to="refreshrations" position="right" offset="0,5" width="20" />
+				<script>
+					function onButtonPress()
+						local sheet = window.getDatabaseNode()
+						local rationfield = sheet.getChild("rations")
+						local currations = rationfield.getValue()
+
+						if currations > 0 then
+							rationfield.setValue(currations-1)
+							ModifierStack.adjustFreeAdjustment(1)
+						end
+					end
+				</script>
+			</button_plus>
+			
+
+			<!--Strength Skill Box -->
+			<frame_char name="skillframestr">
+				<bounds>20,45,250,200</bounds>
+			</frame_char>
+			<label name="skillframestrtitle">
+				<anchored to="skillframestr" position="insidetopleft" offset="10,10" />
+				<static>STR: </static>
+				<font>reference-b-large</font>
+			</label>
+			<basicnumber name="strnumber">
+				<anchored to="skillframestrtitle" position="right" width="20" offset="5,0" />
+			</basicnumber>
+			<button_roll name="strroll">
+				<anchored to="strnumber" position="right" offset="5,0" width="20" />
+				<script>
+					function onButtonPress()
+						local rActor = ActorManager.getActor("pc", window.getDatabaseNode());
+						local sDesc = "[STRENGTH]"
+						local stundam = window.getDatabaseNode().getChild("skillsslabel").getValue();
+						local killdam = window.getDatabaseNode().getChild("skillsklabel").getValue();
+						local extrastun = window.getDatabaseNode().getChild("extrastun").getValue();
+						local extrakill = window.getDatabaseNode().getChild("extrakill").getValue();
+						local rRoll = {sType = "sRoll", sDesc = sDesc, aDice = { "d10", "r10" }, nMod = window.strnumber.getValue(), stundam = stundam, killdam = killdam, extrastun = extrastun, extrakill = extrakill };
+						
+						ActionsManager.performAction(draginfo, rActor, rRoll);
+					end
+				</script>
+			</button_roll>
+			<list_text name="skillsstr">
+				<anchored to="skillframestr">
+					<left offset="10" />
+					<top offset="30" />
+					<right offset="-20" />
+					<bottom offset="-10" />
+				</anchored>
+				<datasource>.skillliststr</datasource>
+				<class>char_skillstr</class>
+				<sortby>
+					<field>namestr</field>
+				</sortby>
+				<newfocus>namestr</newfocus>
+			</list_text>
+			<scrollbar>
+				<anchored to="skillsstr" />
+				<target>skillsstr</target>
+			</scrollbar>
+			<button_iedit name="skillsstr_iedit">
+				<anchored to="skillsstr" position="aboveright" offset="5,0" />
+				<target>skillsstr</target>
+			</button_iedit>
+			<button_iadd name="skillsstr_iadd">
+				<anchored to="skillsstr_iedit" position="lefthigh" offset="5,0" />
+				<target>skillsstr</target>
+			</button_iadd>
+
+			<!--Speed Skill Box -->
+			<frame_char name="skillframespd">
+				<bounds>270,45,250,200</bounds>
+			</frame_char>
+			<label name="skillframespdtitle">
+				<anchored to="skillframespd" position="insidetopleft" offset="10,10" />
+				<static>SPD: </static>
+				<font>reference-b-large</font>
+			</label>
+			<basicnumber name="spdnumber">
+				<anchored to="skillframespdtitle" position="right" width="20" offset="5,0" />
+			</basicnumber>
+			<button_roll name="spdroll">
+				<anchored to="spdnumber" position="right" offset="5,0" width="20" />
+				<script>
+					function onButtonPress()
+						local rActor = ActorManager.getActor("pc", window.getDatabaseNode());
+						local sDesc = "[SPEED]"
+						local stundam = window.getDatabaseNode().getChild("skillsslabel").getValue();
+						local killdam = window.getDatabaseNode().getChild("skillsklabel").getValue();
+						local extrastun = window.getDatabaseNode().getChild("extrastun").getValue();
+						local extrakill = window.getDatabaseNode().getChild("extrakill").getValue();
+						local rRoll = {sType = "sRoll", sDesc = sDesc, aDice = { "d10", "r10" }, nMod = window.spdnumber.getValue(), stundam = stundam, killdam = killdam, extrastun = extrastun, extrakill = extrakill };
+						
+						ActionsManager.performAction(draginfo, rActor, rRoll);
+					end
+				</script>
+			</button_roll>
+			<labelnoheight name="initrolll">
+				<anchored to="spdroll" position="right" offset="5,0" width="30"/>
+				<static>INIT:</static>
+			</labelnoheight>
+			<button_roll name="initroll">
+				<anchored to="initrolll" position="right" offset="5,0" width="20" />
+				<script>
+					function onButtonPress()
+						local rActor = ActorManager.getActor("pc", window.getDatabaseNode());
+						local sDesc = "[INITIATIVE]"
+						local rRoll = {sType = "initroll", sDesc = sDesc, aDice = { "d10"}, nMod = window.spdnumber.getValue() };
+						
+						ActionsManager.performAction(draginfo, rActor, rRoll);
+					end
+				</script>
+			</button_roll>
+
+			<number_ctlink name="initresult" source="initresult">
+				<anchored to="initroll" position="right" width="20" offset="5,0"/>
+			</number_ctlink>
+
+			<list_text name="skillsspd">
+				<anchored to="skillframespd">
+					<left offset="10" />
+					<top offset="30" />
+					<right offset="-20" />
+					<bottom offset="-10" />
+				</anchored>
+				<datasource>.skilllistspd</datasource>
+				<class>char_skillspd</class>
+				<sortby>
+					<field>namespd</field>
+				</sortby>
+				<newfocus>namespd</newfocus>
+			</list_text>
+			<scrollbar>
+				<anchored to="skillsspd" />
+				<target>skillsspd</target>
+			</scrollbar>
+			<button_iedit name="skillsspd_iedit">
+				<anchored to="skillsspd" position="aboveright" offset="5,0" />
+				<target>skillsspd</target>
+			</button_iedit>
+			<button_iadd name="skillsspd_iadd">
+				<anchored to="skillsspd_iedit" position="lefthigh" offset="5,0" />
+				<target>skillsspd</target>
+			</button_iadd>
+
+			<!--ADP Skill Box -->
+			<frame_char name="skillframeadp">
+				<bounds>20,250,250,200</bounds>
+			</frame_char>
+			<label name="skillframeadptitle">
+				<anchored to="skillframeadp" position="insidetopleft" offset="10,10" />
+				<static>ADP: </static>
+				<font>reference-b-large</font>
+			</label>
+			<basicnumber name="adpnumber">
+				<anchored to="skillframeadptitle" position="right" width="20" offset="5,0" />
+			</basicnumber>
+			<button_roll name="adproll">
+				<anchored to="adpnumber" position="right" offset="5,0" width="20"  />
+				<script>
+					function onButtonPress()
+						local rActor = ActorManager.getActor("pc", window.getDatabaseNode());
+						local sDesc = "[ADAPTABILITY]"
+						local stundam = window.getDatabaseNode().getChild("skillsslabel").getValue();
+						local killdam = window.getDatabaseNode().getChild("skillsklabel").getValue();
+						local extrastun = window.getDatabaseNode().getChild("extrastun").getValue();
+						local extrakill = window.getDatabaseNode().getChild("extrakill").getValue();
+						local rRoll = {sType = "sRoll", sDesc = sDesc, aDice = { "d10", "r10" }, nMod = window.adpnumber.getValue(), stundam = stundam, killdam = killdam, extrastun = extrastun, extrakill = extrakill };
+						
+						ActionsManager.performAction(draginfo, rActor, rRoll);
+					end
+				</script>
+			</button_roll>
+			<labelnoheight name="refreshcurlabel">
+				<anchored to="adproll" position="right" offset="0,0" width="25" />
+				<static>Ref.</static>
+				<font>reference-b-large</font>
+			</labelnoheight>
+			<basicnumber name="refreshcurnumber">
+				<anchored to="refreshcurlabel" position="right" width="20" offset="5,0" />
+			</basicnumber>
+			<button_plus name="button_refreshplus">
+				<anchored to="refreshcurnumber" position="right" width="20" offset="5,0" />
+				<script>
+					function onButtonPress()
+						local refresh = window.getDatabaseNode().getChild("refreshcurnumber")
+						local refreshcur = window.getDatabaseNode().getChild("refreshcurnumber").getValue()
+						local message = ChatManager.createBaseMessage(window.getDatabaseNode())
+
+						refresh.setValue(refreshcur + 1)
+						message.text = "refresh added."
+
+						Comm.deliverChatMessage(message)
+					end
+				</script>
+			</button_plus> 
+			<button_minus name="button_refreshminus">
+				<anchored to="refreshcurnumber" position="right" width="20" offset="30,0" />
+				<script>
+					function onButtonPress()
+						local refresh = window.getDatabaseNode().getChild("refreshcurnumber")
+						local refreshcur = window.getDatabaseNode().getChild("refreshcurnumber").getValue()
+						local message = ChatManager.createBaseMessage(window.getDatabaseNode())
+
+						if refreshcur > 0 then
+							refresh.setValue(refreshcur - 1)
+							message.text = "refresh point spent."
+						else
+							message.text = "Not enough refresh."
+						end
+
+						Comm.deliverChatMessage(message)
+					end
+				</script>
+			</button_minus> 
+
+
+			<list_text name="skillsadp">
+				<anchored to="skillframeadp">
+					<left offset="10" />
+					<top offset="30" />
+					<right offset="-20" />
+					<bottom offset="-10" />
+				</anchored>
+				<datasource>.skilllistadp</datasource>
+				<class>char_skilladp</class>
+				<sortby>
+					<field>nameadp</field>
+				</sortby>
+				<newfocus>nameadp</newfocus>
+			</list_text>
+			<scrollbar>
+				<anchored to="skillsadp" />
+				<target>skillsadp</target>
+			</scrollbar>
+			<button_iedit name="skillsadp_iedit">
+				<anchored to="skillsadp" position="aboveright" offset="5,0" />
+				<target>skillsadp</target>
+			</button_iedit>
+			<button_iadd name="skillsadp_iadd">
+				<anchored to="skillsadp_iedit" position="lefthigh" offset="5,0" />
+				<target>skillsadp</target>
+			</button_iadd>
+
+			<!--INT Skill Box -->
+			<frame_char name="skillframeint">
+				<bounds>270,250,250,200</bounds>
+			</frame_char>
+			<label name="skillframeinttitle">
+				<anchored to="skillframeint" position="insidetopleft" offset="10,10" />
+				<static>INT: </static>
+				<font>reference-b-large</font>
+			</label>
+			<basicnumber name="intnumber">
+				<anchored to="skillframeinttitle" position="right" width="20" offset="5,0" />
+			</basicnumber>
+			<button_roll>
+				<anchored to="intnumber" position="right" offset="5,0" width="20" />
+				<script>
+					function onButtonPress()
+						local rActor = ActorManager.getActor("pc", window.getDatabaseNode());
+						local sDesc = "[INTELLIGENCE]"
+						local stundam = window.getDatabaseNode().getChild("skillsslabel").getValue();
+						local killdam = window.getDatabaseNode().getChild("skillsklabel").getValue();
+						local extrastun = window.getDatabaseNode().getChild("extrastun").getValue();
+						local extrakill = window.getDatabaseNode().getChild("extrakill").getValue();
+						local rRoll = {sType = "sRoll", sDesc = sDesc, aDice = { "d10", "r10" }, nMod = window.intnumber.getValue(), stundam = stundam, killdam = killdam, extrastun = extrastun, extrakill = extrakill };
+						
+						ActionsManager.performAction(draginfo, rActor, rRoll);
+					end
+				</script>
+			</button_roll>
+			<list_text name="skillsint">
+				<anchored to="skillframeint">
+					<left offset="10" />
+					<top offset="30" />
+					<right offset="-20" />
+					<bottom offset="-10" />
+				</anchored>
+				<datasource>.skilllistint</datasource>
+				<class>char_skillint</class>
+				<sortby>
+					<field>nameint</field>
+				</sortby>
+				<newfocus>nameint</newfocus>
+			</list_text>
+			<scrollbar>
+				<anchored to="skillsint" />
+				<target>skillsint</target>
+			</scrollbar>
+			<button_iedit name="skillsint_iedit">
+				<anchored to="skillsint" position="aboveright" offset="5,0" />
+				<target>skillsint</target>
+			</button_iedit>
+			<button_iadd name="skillsint_iadd">
+				<anchored to="skillsint_iedit" position="lefthigh" offset="5,0" />
+				<target>skillsint</target>
+			</button_iadd>
+
+			<!--CHA Skill Box -->
+			<frame_char name="skillframecha">
+				<bounds>20,455,250,200</bounds>
+			</frame_char>
+			<label name="skillframechatitle">
+				<anchored to="skillframecha" position="insidetopleft" offset="10,10" />
+				<static>CHA: </static>
+				<font>reference-b-large</font>
+			</label>
+			<basicnumber name="chanumber">
+				<anchored to="skillframechatitle" position="right" width="20" offset="5,0" />
+			</basicnumber>
+			<button_roll>
+				<anchored to="chanumber" position="right" offset="5,0" width="20" />
+				<script>
+					function onButtonPress()
+						local rActor = ActorManager.getActor("pc", window.getDatabaseNode());
+						local sDesc = "[CHARISMA]"
+						local stundam = window.getDatabaseNode().getChild("skillsslabel").getValue();
+						local killdam = window.getDatabaseNode().getChild("skillsklabel").getValue();
+						local extrastun = window.getDatabaseNode().getChild("extrastun").getValue();
+						local extrakill = window.getDatabaseNode().getChild("extrakill").getValue();
+						local rRoll = {sType = "sRoll", sDesc = sDesc, aDice = { "d10", "r10" }, nMod = window.chanumber.getValue(), stundam = stundam, killdam = killdam, extrastun = extrastun, extrakill = extrakill };
+						
+						ActionsManager.performAction(draginfo, rActor, rRoll);
+					end
+				</script>
+			</button_roll>
+			<list_text name="skillscha">
+				<anchored to="skillframecha">
+					<left offset="10" />
+					<top offset="30" />
+					<right offset="-20" />
+					<bottom offset="-10" />
+				</anchored>
+				<datasource>.skilllistcha</datasource>
+				<class>char_skillcha</class>
+				<sortby>
+					<field>namecha</field>
+				</sortby>
+				<newfocus>namecha</newfocus>
+			</list_text>
+			<scrollbar>
+				<anchored to="skillscha" />
+				<target>skillscha</target>
+			</scrollbar>
+			<button_iedit name="skillscha_iedit">
+				<anchored to="skillscha" position="aboveright" offset="5,0" />
+				<target>skillscha</target>
+			</button_iedit>
+			<button_iadd name="skillscha_iadd">
+				<anchored to="skillscha_iedit" position="lefthigh" offset="5,0" />
+				<target>skillscha</target>
+			</button_iadd>
+
+			<!--WIL Skill Box -->
+			<frame_char name="skillframewil">
+				<bounds>270,455,250,200</bounds>
+			</frame_char>
+			<label name="skillframewiltitle">
+				<anchored to="skillframewil" position="insidetopleft" offset="10,10" />
+				<static>WIL: </static>
+				<font>reference-b-large</font>
+			</label>
+			<basicnumber name="willmaxnumber">
+				<anchored to="skillframewiltitle" position="right" width="20" offset="5,0" />
+			</basicnumber>
+			<labelnoheight name="willcurlabel">
+				<anchored to="willmaxnumber" position="right" offset="5,0" width="50" />
+				<static>Current Will:</static>
+				<font>reference-b-large</font>
+			</labelnoheight>
+			<basicnumber name="willcurnumber">
+				<anchored to="willcurlabel" position="right" width="20" offset="5,0" />
+			</basicnumber>
+			<button_plus name="button_willplus">
+				<anchored to="willcurnumber" position="right" width="20" offset="5,0" />
+				<script>
+					function onButtonPress()
+						local will = window.getDatabaseNode().getChild("willcurnumber")
+						local willcur = window.getDatabaseNode().getChild("willcurnumber").getValue()
+						local message = ChatManager.createBaseMessage(window.getDatabaseNode())
+
+						will.setValue(willcur + 1)
+						message.text = "Will added."
+
+						Comm.deliverChatMessage(message)
+					end
+				</script>
+			</button_plus> 
+			<button_minus name="button_willminus">
+				<anchored to="willcurnumber" position="right" width="20" offset="30,0" />
+				<script>
+					function onButtonPress()
+						local will = window.getDatabaseNode().getChild("willcurnumber")
+						local willcur = window.getDatabaseNode().getChild("willcurnumber").getValue()
+						local message = ChatManager.createBaseMessage(window.getDatabaseNode())
+
+						if willcur > 0 then
+							will.setValue(willcur - 1)
+							message.text = "Will point spent."
+						else
+							message.text = "Not enough will."
+						end
+
+						Comm.deliverChatMessage(message)
+					end
+				</script>
+			</button_minus> 
+
+
+
+
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="char_skillstr">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<button_roll>
+				<anchored height="20" width="20">
+					<top offset="2" />
+					<left offset="5" />
+				</anchored>
+				<script>
+					function onButtonPress()
+						local rActor = ActorManager.getActor("pc", window.windowlist.window.getDatabaseNode());
+						local sDesc = "[SKILL]" .. window.namestr.getValue()
+						local combatroll = window.windowlist.window.getDatabaseNode().getChild("combatroll").getValue();
+						local stundam = window.windowlist.window.getDatabaseNode().getChild("skillsslabel").getValue();
+						local killdam = window.windowlist.window.getDatabaseNode().getChild("skillsklabel").getValue();
+						local extrastun = window.windowlist.window.getDatabaseNode().getChild("extrastun").getValue();
+						local extrakill = window.windowlist.window.getDatabaseNode().getChild("extrakill").getValue();
+						local usesration = window.rationstr.getValue()
+						local rRoll = {sType = "sRoll", sDesc = sDesc, aDice = { "d10", "r10" }, nMod = window.modstr.getValue(), stundam = stundam, killdam = killdam, extrastun = extrastun, extrakill = extrakill, usesration = usesration };
+						
+						ActionsManager.performAction(draginfo, rActor, rRoll);
+					end
+				</script>
+			</button_roll>
+			
+			<genericcontrol name="rightanchorstr">
+				<anchored height="0" width="0">
+					<top />
+					<right />
+				</anchored>
+			</genericcontrol>
+			<button_idelete name="idelete">
+				<anchored>
+					<top offset="2" />
+					<right parent="rightanchorstr" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+			</button_idelete>
+			<basicnumber name="modstr">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchorstr" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+				<tooltip text="modifier" />
+				</basicnumber>
+
+			<button_rationskill name="rationstr">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchorstr" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+				<center />
+				<text>R?</text>
+			</button_rationskill>
+
+			<string_textlistitem name="namestr">
+				<anchored height="20">
+					<top offset="2" />
+					<left offset="30" />
+					<right parent="rightanchorstr" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+			</string_textlistitem>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="char_skillspd">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<button_roll>
+				<anchored height="20" width="20">
+					<top offset="2" />
+					<left offset="5" />
+				</anchored>
+				<script>
+					function onButtonPress()
+						local rActor = ActorManager.getActor("pc", window.windowlist.window.getDatabaseNode());
+						local sDesc = "[SKILL]" .. window.namespd.getValue()
+						local combatroll = window.windowlist.window.getDatabaseNode().getChild("combatroll").getValue();
+						local stundam = window.windowlist.window.getDatabaseNode().getChild("skillsslabel").getValue();
+						local killdam = window.windowlist.window.getDatabaseNode().getChild("skillsklabel").getValue();
+						local extrastun = window.windowlist.window.getDatabaseNode().getChild("extrastun").getValue();
+						local extrakill = window.windowlist.window.getDatabaseNode().getChild("extrakill").getValue();
+						local usesration = window.rationspd.getValue()
+						local rRoll = {sType = "sRoll", sDesc = sDesc, aDice = { "d10", "r10" }, nMod = window.modspd.getValue(), stundam = stundam, killdam = killdam, extrastun = extrastun, extrakill = extrakill, usesration = usesration };
+						
+						ActionsManager.performAction(draginfo, rActor, rRoll);
+					end
+				</script>
+			</button_roll>
+			
+			<genericcontrol name="rightanchorspd">
+				<anchored height="0" width="0">
+					<top />
+					<right />
+				</anchored>
+			</genericcontrol>
+			<button_idelete name="idelete">
+				<anchored>
+					<top offset="2" />
+					<right parent="rightanchorspd" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+			</button_idelete>
+			<basicnumber name="modspd">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchorspd" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+				<tooltip text="modifier" />
+				</basicnumber>
+
+				<button_rationskill name="rationspd">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchorspd" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+				<center />
+				<text>R?</text>
+			</button_rationskill>
+
+			<string_textlistitem name="namespd">
+				<anchored height="20">
+					<top offset="2" />
+					<left offset="30" />
+					<right parent="rightanchorspd" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+			</string_textlistitem>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="char_skilladp">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<button_roll>
+				<anchored height="20" width="20">
+					<top offset="2" />
+					<left offset="5" />
+				</anchored>
+				<script>
+					function onButtonPress()
+						local rActor = ActorManager.getActor("pc", window.windowlist.window.getDatabaseNode());
+						local sDesc = "[SKILL]" .. window.nameadp.getValue()
+						local combatroll = window.windowlist.window.getDatabaseNode().getChild("combatroll").getValue();
+						local stundam = window.windowlist.window.getDatabaseNode().getChild("skillsslabel").getValue();
+						local killdam = window.windowlist.window.getDatabaseNode().getChild("skillsklabel").getValue();
+						local extrastun = window.windowlist.window.getDatabaseNode().getChild("extrastun").getValue();
+						local extrakill = window.windowlist.window.getDatabaseNode().getChild("extrakill").getValue();
+						local usesration = window.rationadp.getValue()
+						local rRoll = {sType = "sRoll", sDesc = sDesc, aDice = { "d10", "r10" }, nMod = window.modadp.getValue(), stundam = stundam, killdam = killdam, extrastun = extrastun, extrakill = extrakill, usesration = usesration };
+						
+						ActionsManager.performAction(draginfo, rActor, rRoll);
+					end
+				</script>
+			</button_roll>
+			
+			<genericcontrol name="rightanchoradp">
+				<anchored height="0" width="0">
+					<top />
+					<right />
+				</anchored>
+			</genericcontrol>
+			<button_idelete name="idelete">
+				<anchored>
+					<top offset="2" />
+					<right parent="rightanchoradp" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+			</button_idelete>
+			<basicnumber name="modadp">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchoradp" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+				<tooltip text="modifier" />
+				</basicnumber>
+
+				<button_rationskill name="rationadp">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchoradp" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+				<center />
+				<text>R?</text>
+			</button_rationskill>
+
+			<string_textlistitem name="nameadp">
+				<anchored height="20">
+					<top offset="2" />
+					<left offset="30" />
+					<right parent="rightanchoradp" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+			</string_textlistitem>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="char_skillint">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<button_roll>
+				<anchored height="20" width="20">
+					<top offset="2" />
+					<left offset="5" />
+				</anchored>
+				<script>
+					function onButtonPress()
+						local rActor = ActorManager.getActor("pc", window.windowlist.window.getDatabaseNode());
+						local sDesc = "[SKILL]" .. window.nameint.getValue()
+						local combatroll = window.windowlist.window.getDatabaseNode().getChild("combatroll").getValue();
+						local stundam = window.windowlist.window.getDatabaseNode().getChild("skillsslabel").getValue();
+						local killdam = window.windowlist.window.getDatabaseNode().getChild("skillsklabel").getValue();
+						local extrastun = window.windowlist.window.getDatabaseNode().getChild("extrastun").getValue();
+						local extrakill = window.windowlist.window.getDatabaseNode().getChild("extrakill").getValue();
+						local rRoll = {sType = "sRoll", sDesc = sDesc, aDice = { "d10", "r10" }, nMod = window.modint.getValue(), stundam = stundam, killdam = killdam, extrastun = extrastun, extrakill = extrakill };
+						
+						ActionsManager.performAction(draginfo, rActor, rRoll);
+					end
+				</script>
+			</button_roll>
+			
+			<genericcontrol name="rightanchorint">
+				<anchored height="0" width="0">
+					<top />
+					<right />
+				</anchored>
+			</genericcontrol>
+			<button_idelete name="idelete">
+				<anchored>
+					<top offset="2" />
+					<right parent="rightanchorint" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+			</button_idelete>
+			<basicnumber name="modint">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchorint" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+				<tooltip text="modifier" />
+				</basicnumber>
+
+			<string_textlistitem name="nameint">
+				<anchored height="20">
+					<top offset="2" />
+					<left offset="30" />
+					<right parent="rightanchorint" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+			</string_textlistitem>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="char_skillcha">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<button_roll>
+				<anchored height="20" width="20">
+					<top offset="2" />
+					<left offset="5" />
+				</anchored>
+				<script>
+					function onButtonPress()
+						local rActor = ActorManager.getActor("pc", window.windowlist.window.getDatabaseNode());
+						local sDesc = "[SKILL]" .. window.namecha.getValue()
+						local combatroll = window.windowlist.window.getDatabaseNode().getChild("combatroll").getValue();
+						local stundam = window.windowlist.window.getDatabaseNode().getChild("skillsslabel").getValue();
+						local killdam = window.windowlist.window.getDatabaseNode().getChild("skillsklabel").getValue();
+						local extrastun = window.windowlist.window.getDatabaseNode().getChild("extrastun").getValue();
+						local extrakill = window.windowlist.window.getDatabaseNode().getChild("extrakill").getValue();
+						local rRoll = {sType = "sRoll", sDesc = sDesc, aDice = { "d10", "r10" }, nMod = window.modcha.getValue(), stundam = stundam, killdam = killdam, extrastun = extrastun, extrakill = extrakill };
+						
+						ActionsManager.performAction(draginfo, rActor, rRoll);
+					end
+				</script>
+			</button_roll>
+			
+			<genericcontrol name="rightanchorcha">
+				<anchored height="0" width="0">
+					<top />
+					<right />
+				</anchored>
+			</genericcontrol>
+			<button_idelete name="idelete">
+				<anchored>
+					<top offset="2" />
+					<right parent="rightanchorcha" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+			</button_idelete>
+			<basicnumber name="modcha">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchorcha" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+				<tooltip text="modifier" />
+				</basicnumber>
+
+			<string_textlistitem name="namecha">
+				<anchored height="20">
+					<top offset="2" />
+					<left offset="30" />
+					<right parent="rightanchorcha" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+			</string_textlistitem>
+		</sheetdata>
+	</windowclass>
+</root>

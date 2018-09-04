@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="partysheet_host">
+		<frame>partysheet</frame>
+		<placement>
+			<size width="770" height="500" />
+		</placement>
+		<sizelimits>
+			<minimum width="770" height="500" />
+			<dynamic />
+		</sizelimits>
+		<softclose />
+		<nodelete />
+		<sheetdata>
+			<windowtitlebar name="title">
+				<resource>ps_window_title</resource>
+			</windowtitlebar>
+			<anchor_title_partysheet name="contentanchor" />
+			
+			<sub_ps name="inventory">
+				<class>ps_inventory</class>
+			</sub_ps>
+			<sub_ps name="order">
+				<class>ps_order</class>
+			</sub_ps>
+			<sub_ps name="crewsheet">
+				<class>ps_crewsheet</class>
+			</sub_ps>
+			
+			<tabs_partysheet name="tabs">
+				<tab>
+					<icon>tab_inventory</icon>
+					<subwindow>inventory</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_order</icon>
+					<subwindow>order</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_health</icon>
+					<subwindow>crewsheet</subwindow>
+				</tab>
+			</tabs_partysheet>
+			
+			<resize_partysheet />
+			<helper_ps />
+			<close_partysheet />
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="partysheet_client">
+		<frame>partysheet</frame>
+		<placement>
+			<size width="770" height="500" />
+		</placement>
+		<sizelimits>
+			<minimum width="770" height="500" />
+			<dynamic />
+		</sizelimits>
+		<softclose />
+		<nodelete />
+		<playercontrol />
+		<sheetdata>
+			<windowtitlebar name="title">
+				<resource>ps_window_title</resource>
+			</windowtitlebar>
+			<anchor_title_partysheet name="contentanchor" />
+			
+			<sub_ps name="inventory">
+				<class>ps_inventory</class>
+			</sub_ps>
+			<sub_ps name="order">
+				<class>ps_order</class>
+			</sub_ps>
+			
+			<tabs_partysheet name="tabs">
+				<tab>
+					<icon>tab_inventory</icon>
+					<subwindow>inventory</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_order</icon>
+					<subwindow>order</subwindow>
+				</tab>
+			</tabs_partysheet>
+			
+			<resize_partysheet />
+			<helper_ps />
+			<close_partysheet />
+		</sheetdata>
+	</windowclass>
+</root>

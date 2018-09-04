@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="npc">
+		<frame>recordsheet</frame>
+		<placement>
+			<size width="350" height="400" />
+		</placement>
+		<sizelimits>
+			<minimum width="350" height="400" />
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_npc</minimize>
+		<tooltip field="name" />
+		<nodelete />
+		<script file="campaign/scripts/npc.lua" />
+		<sheetdata>
+			<sub_record_header name="header">
+				<class>npc_header</class>
+			</sub_record_header>
+
+			<frame_record_content_tabbed name="contentframe" />
+
+			<subwindow_record name="main">
+				<class>npc_main</class>
+			</subwindow_record>
+			<ft_record name="notes">
+				<anchored to="contentframe" position="over" />
+				<empty textres="ft_empty" hidereadonly="true" />
+				<invisible />
+			</ft_record>
+
+			<scrollbar_record>
+				<target>main</target>
+			</scrollbar_record>
+			<scrollbar_record>
+				<target>notes</target>
+			</scrollbar_record>
+
+			<tabs_recordsheet name="tabs">
+				<tab>
+					<icon>tab_main</icon>
+					<subwindow>main</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_notes</icon>
+					<subwindow>notes</subwindow>
+				</tab>
+			</tabs_recordsheet>
+			
+			<resize_recordsheet />
+			<close_recordsheet />
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="npc_header">
+		<margins control="0,0,0,7" />
+		<script file="campaign/scripts/npc_header.lua" />
+		<sheetdata>
+			<link_record_header_id name="link">
+				<class>npc</class>
+			</link_record_header_id>
+			
+			<anchor_record_header_right name="rightanchor" />
+			<button_activateid>
+				<anchored to="rightanchor" width="23" height="22">
+					<top offset="-2" />
+					<right anchor="left" relation="relative" offset="-5" />
+				</anchored>
+			</button_activateid>
+			<tokenfield name="token">
+				<anchored to="rightanchor" width="25" height="25">
+					<top offset="-2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-3" />
+				</anchored>
+				<empty>token_empty</empty>
+				<script>
+					function onDoubleClick(x, y)
+						CombatManager.openMap(window.getDatabaseNode());
+					end
+				</script>
+			</tokenfield>
+			<button_record_isidentified name="isidentified" />
+			<icon_record_locked />
+			<button_record_locked />
+
+			<string_record_name_id name="name">
+				<empty textres="library_recordtype_empty_npc" />
+			</string_record_name_id>
+			<string_record_name_id name="nonid_name">
+				<empty textres="library_recordtype_empty_nonid_npc" />
+				<invisible />
+			</string_record_name_id>
+		</sheetdata>
+	</windowclass>
+
+
+	<windowclass name="npc_main" merge="delete"/>
+		<windowclass name="npc_main">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/npc_main.lua" />
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<label_column name="nonid_name_label">
+				<static textres="npc_label_unidentified" />
+			</label_column>
+			<string_columnh name="nonid_name" />
+			
+			<label_column name="space_label">
+				<static textres="npc_label_size" />
+			</label_column>
+			<number_column name="space">
+				<default>1</default>
+			</number_column>
+
+			<line_column name="divider" />
+			
+			<label_column_right name="reach_label">
+				<anchored to="space" />
+				<static textres="npc_label_reach" />
+			</label_column_right>
+			<number_column_right name="reach">
+				<anchored to="space" />
+				<default>1</default>
+			</number_column_right>
+			
+			<line_column name="divider2" />
+
+			<frame_char name="framenpc">
+				<bounds>5,60, 300, 250</bounds>
+			</frame_char>
+			<labelnoheight name="typeparttimel">
+				<anchored to="framenpc" position="insidetopleft" width="20" height="20" offset="5,5"/>
+				<static>PT</static>
+			</labelnoheight>
+			<button_checkbox name="typeparttime">
+				<anchored to="typeparttimel" position="right" width="20" offset="5,0"/>
+				<script>
+					function onValueChanged()
+						local parttime = window.getDatabaseNode().getChild("typeparttime")
+						local fulltime = window.getDatabaseNode().getChild("typefulltime")
+						local management = window.getDatabaseNode().getChild("typemanagement")
+						local vector = window.getDatabaseNode().getChild("typevector")
+						local mob = window.getDatabaseNode().getChild("typemob")
+
+						if self.getValue() == 1 then
+							fulltime.setValue(0)
+							management.setValue(0)
+							vector.setValue(0)
+							mob.setValue(0)
+							window.pthpl.setVisible(true)
+							window.pthp.setVisible(true)
+							window.mobsizel.setVisible(false)
+							window.mobsize.setVisible(false)
+						end
+
+					end
+				</script>
+			</button_checkbox>
+
+			<labelnoheight name="typefulltimel">
+				<anchored to="typeparttime" position="right" width="20" offset="5,0"/>
+				<static>FT</static>
+			</labelnoheight>
+			<button_checkbox name="typefulltime">
+				<anchored to="typefulltimel" position="right" width="20" offset="5,0"/>
+				<script>
+					function onValueChanged()
+						local parttime = window.getDatabaseNode().getChild("typeparttime")
+						local fulltime = window.getDatabaseNode().getChild("typefulltime")
+						local management = window.getDatabaseNode().getChild("typemanagement")
+						local vector = window.getDatabaseNode().getChild("typevector")
+						local mob = window.getDatabaseNode().getChild("typemob")
+
+						if self.getValue() == 1 then
+							parttime.setValue(0)
+							management.setValue(0)
+							vector.setValue(0)
+							mob.setValue(0)
+							window.pthpl.setVisible(false)
+							window.pthp.setVisible(false)
+							window.mobsizel.setVisible(false)
+							window.mobsize.setVisible(false)
+						end
+
+					end
+				</script>
+			</button_checkbox>
+
+			<labelnoheight name="typemanagementl">
+				<anchored to="typefulltime" position="right" width="20" offset="5,0"/>
+				<static>MG</static>
+			</labelnoheight>
+			<button_checkbox name="typemanagement">
+				<anchored to="typemanagementl" position="right" width="20" offset="5,0"/>
+				<script>
+					function onValueChanged()
+						local parttime = window.getDatabaseNode().getChild("typeparttime")
+						local fulltime = window.getDatabaseNode().getChild("typefulltime")
+						local management = window.getDatabaseNode().getChild("typemanagement")
+						local vector = window.getDatabaseNode().getChild("typevector")
+						local mob = window.getDatabaseNode().getChild("typemob")
+
+						if self.getValue() == 1 then
+							parttime.setValue(0)
+							fulltime.setValue(0)
+							vector.setValue(0)
+							mob.setValue(0)
+							window.pthpl.setVisible(false)
+							window.pthp.setVisible(false)
+							window.mobsizel.setVisible(false)
+							window.mobsize.setVisible(false)
+						end
+
+					end
+				</script>
+			</button_checkbox>
+
+			<labelnoheight name="typevectorl">
+				<anchored to="typemanagement" position="right" width="20" offset="5,0"/>
+				<static>VE</static>
+			</labelnoheight>
+			<button_checkbox name="typevector">
+				<anchored to="typevectorl" position="right" width="20" offset="5,0"/>
+				<script>
+					function onValueChanged()
+						local parttime = window.getDatabaseNode().getChild("typeparttime")
+						local fulltime = window.getDatabaseNode().getChild("typefulltime")
+						local management = window.getDatabaseNode().getChild("typemanagement")
+						local vector = window.getDatabaseNode().getChild("typevector")
+						local mob = window.getDatabaseNode().getChild("typemob")
+
+						if self.getValue() == 1 then
+							parttime.setValue(0)
+							fulltime.setValue(0)
+							management.setValue(0)
+							mob.setValue(0)
+							window.pthpl.setVisible(false)
+							window.pthp.setVisible(false)
+							window.mobsizel.setVisible(false)
+							window.mobsize.setVisible(false)
+						end
+
+					end
+				</script>
+			</button_checkbox>
+
+			<labelnoheight name="typemobl">
+				<anchored to="typevector" position="right" width="30" offset="5,0"/>
+				<static>Mob</static>
+			</labelnoheight>
+			<button_checkbox name="typemob">
+				<anchored to="typemobl" position="right" width="20" offset="5,0"/>
+				<script>
+					function onValueChanged()
+						local parttime = window.getDatabaseNode().getChild("typeparttime")
+						local fulltime = window.getDatabaseNode().getChild("typefulltime")
+						local management = window.getDatabaseNode().getChild("typemanagement")
+						local vector = window.getDatabaseNode().getChild("typevector")
+						local mob = window.getDatabaseNode().getChild("typemob")
+
+						if self.getValue() == 1 then
+							parttime.setValue(0)
+							fulltime.setValue(0)
+							management.setValue(0)
+							vector.setValue(0)
+							window.pthpl.setVisible(false)
+							window.pthp.setVisible(false)
+							window.mobsizel.setVisible(true)
+							window.mobsize.setVisible(true)
+							
+						end
+
+					end
+				</script>
+			</button_checkbox>
+
+			<labelnoheight name="advantagel">
+				<anchored to="framenpc" position="insidetopleft" height="20" width="50" offset="5,30"/>
+				<static>Adv/MM:</static>
+			</labelnoheight>
+			<basicnumber name="advantage">
+				<anchored to="advantagel" position="right" width="20" offset="5,0"/>
+			</basicnumber>
+
+			<labelnoheight name="determinationl">
+				<anchored to="advantage" position="right" width="25" offset="5,0"/>
+				<static>Will:</static>
+			</labelnoheight>
+			<basicnumber name="determination">
+				<anchored to="determinationl" position="right" width="20" offset="5,0"/>
+			</basicnumber>
+			<labelnoheight name="mobsizel">
+				<anchored to="determination" position="right" width="60" offset="5,0"/>
+				<static>Mob Size:</static>
+				<script>
+					function onInit()
+						if window.getDatabaseNode().getChild("typemob").getValue() == 1 then
+							self.setVisible(true)
+						else
+							self.setVisible(false)
+						end
+					end
+				</script>
+			</labelnoheight>
+			<basicnumber name="mobsize">
+				<anchored to="mobsizel" position="right" width="20" offset="5,0"/>
+				<script>
+				function onInit()
+						if window.getDatabaseNode().getChild("typemob").getValue() == 1 then
+							self.setVisible(true)
+						else
+							self.setVisible(false)
+						end
+					end
+				</script>
+				</basicnumber>
+			<labelnoheight name="pthpl">
+				<anchored to="determination" position="right" width="60" offset="5,0"/>
+				<static>PT HP:</static>
+				<script>
+					function onInit()
+						if window.getDatabaseNode().getChild("typeparttime").getValue() == 1 then
+							self.setVisible(true)
+						else
+							self.setVisible(false)
+						end
+					end
+				</script>
+			</labelnoheight>
+			<basicnumber name="pthp">
+				<anchored to="pthpl" position="right" width="20" offset="5,0"/>
+				<default>10</default>
+				<script>
+					function onInit()
+						if window.getDatabaseNode().getChild("typeparttime").getValue() == 1 then
+							self.setVisible(true)
+						else
+							self.setVisible(false)
+						end
+					end
+				</script>
+			</basicnumber>
+
+
+
+			<stringcontrol name="combatrollb">
+				<anchored to="framenpc" position="insidetopleft" width="100" height="20" offset="5,55"/>
+				<center />
+				<static>Combat Roll</static>
+				<font>sheetlabel</font>
+			</stringcontrol>
+			<button_defroll name="npcstundamage">
+				<anchored to="combatrollb" position="right" width="20" offset="10,0" />
+					<text>S+</text>
+			</button_defroll>
+			<basicnumber name="npcextrastun">
+				<anchored to="npcstundamage" position="right" width="20" offset="10,0" />
+			</basicnumber>
+			<button_defroll name="npckilldamage">
+				<anchored to="npcextrastun" position="right" width="20" offset="10,0" />
+					<text>K+</text>
+			</button_defroll>
+			<basicnumber name="npcextrakill">
+				<anchored to="npckilldamage" position="right" width="20" offset="10,0" />
+			</basicnumber>
+
+
+
+			<!-- Damage locations and armour begin -->
+
+			<labelnoheight name="headl">
+				<anchored to="framenpc" position="insidetopleft" height="20" width="100" offset="5,80"/>
+				<static>Head S/K/Armour</static>
+			</labelnoheight>
+			<basicnumber name="hdstun">
+				<anchored to="headl" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+			<basicnumber name="hdkill">
+				<anchored to="hdstun" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+			<basicnumber name="hdarmour">
+				<anchored to="hdkill" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+
+
+			<labelnoheight name="torsol">
+				<anchored to="headl" position="below" height="20" offset="0,5"/>
+				<static>Torso S/K/Armour</static>
+			</labelnoheight>
+			<basicnumber name="tostun">
+				<anchored to="torsol" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+			<basicnumber name="tokill">
+				<anchored to="tostun" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+			<basicnumber name="toarmour">
+				<anchored to="tokill" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+
+			<labelnoheight name="rightarml">
+				<anchored to="torsol" position="below" height="20" offset="0,5"/>
+				<static>R.Arm S/K/Armour</static>
+			</labelnoheight>
+			<basicnumber name="rastun">
+				<anchored to="rightarml" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+			<basicnumber name="rakill">
+				<anchored to="rastun" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+			<basicnumber name="raarmour">
+				<anchored to="rakill" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+
+			<labelnoheight name="leftarml">
+				<anchored to="rightarml" position="below" height="20" offset="0,5"/>
+				<static>L.Arm S/K/Armour</static>
+			</labelnoheight>
+			<basicnumber name="lastun">
+				<anchored to="leftarml" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+			<basicnumber name="lakill">
+				<anchored to="lastun" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+			<basicnumber name="laarmour">
+				<anchored to="lakill" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+
+			<labelnoheight name="rightlegl">
+				<anchored to="leftarml" position="below" height="20" offset="0,5"/>
+				<static>R.Leg S/K/Armour</static>
+			</labelnoheight>
+			<basicnumber name="rlstun">
+				<anchored to="rightlegl" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+			<basicnumber name="rlkill">
+				<anchored to="rlstun" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+			<basicnumber name="rlarmour">
+				<anchored to="rlkill" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+
+			<labelnoheight name="leftlegl">
+				<anchored to="rightlegl" position="below" height="20" offset="0,5"/>
+				<static>L.Leg S/K/Armour</static>
+			</labelnoheight>
+			<basicnumber name="llstun">
+				<anchored to="leftlegl" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+			<basicnumber name="llkill">
+				<anchored to="llstun" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+			<basicnumber name="llarmour">
+				<anchored to="llkill" position="right" width="20" offset="10,0"/>
+			</basicnumber>
+
+
+
+
+			
+
+		</sheetdata>
+	</windowclass>
+</root>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="ps_crewsheet">		
+		<sheetdata>
+		<buttoncontrol name="button_rebuild">
+				<anchored width="33" height="26">
+					<left anchor="right" offset="-73" />
+					<top anchor="center" offset="-4" />
+				</anchored>
+				<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
+				<tooltip textres="ps_tooltip_rebuild" />
+				<gmvisibleonly />
+				<script>
+					function onButtonPress()
+						RMItem.updateCrewSheet()
+					end
+				</script>
+			</buttoncontrol>
+
+		<windowlist name="crewmembers">
+			<anchored position="insidetopleft" offset="5,42">
+				<right anchor="center" offset="-5" />
+				<bottom anchor="center" offset="-50" />
+			</anchored>
+			<frame name="groupbox" offset="5,10,15,10" />
+			<datasource>.crewmembers</datasource>
+			<class>ps_crewmembers</class>
+			<allowcreate />
+			<allowdelete />
+		</windowlist>
+		<scrollbar>
+				<anchored to="crewmembers" />
+				<target>crewmembers</target>
+			</scrollbar>
+
+		<labelnoheight name="crewmembersl">
+			<anchored to="crewmembers" position="above" offset="0,22" />
+			<static>Takers</static>
+			<center />
+		</labelnoheight>	
+
+		<labelnoheight name="crewmembersnamel">
+			<anchored to="crewmembers" position="aboveleft" offset="10,5" width="100" />
+			<static>Name</static>
+			<center />
+		</labelnoheight>
+
+		<labelnoheight name="crewmembersbreakpointl">
+			<anchored to="crewmembersnamel" position="right" width="50" offset="10,0"/>
+			<static>Sust.</static>
+			<center />
+		</labelnoheight>
+
+		<labelnoheight name="crewmembersupkeepl">
+			<anchored to="crewmembersbreakpointl" position="right" width="50" offset="10,0"/>
+			<static>Maint.</static>
+			<center />
+		</labelnoheight>
+
+		<labelnoheight name="crewmemberstotall">
+			<anchored to="crewmembersupkeepl" position="right" width="50" offset="10,0"/>
+			<static>Total</static>
+			<center />
+		</labelnoheight>
+
+		<labelnoheight name="crewmembersprofitl">
+			<anchored to="crewmemberstotall" position="right" width="50" offset="10,0"/>
+			<static>Profit</static>
+			<center />
+		</labelnoheight>
+
+		<!-- JERBS -->
+
+		<windowlist name="contracts">
+			<anchored position="insidebottomleft" offset="5,42">
+				<right anchor="center" offset="5" />
+				<bottom anchor="center" offset="-5" />
+			</anchored>
+			<frame name="trump" offset="5,10,15,10" />
+			<datasource>.contracts</datasource>
+			<class>ps_contracts</class>
+			<allowcreate />
+			<allowdelete />
+		</windowlist>
+		<scrollbar>
+				<anchored to="contracts" />
+				<target>contracts</target>
+			</scrollbar>
+
+	</sheetdata>
+</windowclass>
+
+	<windowclass name="ps_crewmembers">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<basicstring name="name">
+				<anchored width="100">
+					<left offset="10" />
+					<top offset="10" />
+				</anchored>
+				<readonly/>
+				<multilinespacing>20</multilinespacing>
+			</basicstring>
+			<basicnumber name="breakpoint">
+				<anchored to="name" position="right" offset="10,0" width="50"/>
+			</basicnumber>
+			<basicnumber name="maintenance">
+				<anchored to="breakpoint" position="right" offset="10,0" width="50"/>
+			</basicnumber>
+			<basicnumber name="total">
+				<anchored to="maintenance" position="right" offset="10,0" width="50"/>
+			</basicnumber>
+			<basicnumber name="profit">
+				<anchored to="total" position="right" offset="10,0" width="50"/>
+			</basicnumber>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ps_contracts">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<basicstring name="name">
+				<anchored width="100">
+					<left offset="10" />
+					<top offset="10" />
+				</anchored>
+				<readonly/>
+				<multilinespacing>20</multilinespacing>
+			</basicstring>
+			<basicnumber name="equilibrium">
+				<anchored to="name" position="right" offset="10,0" width="50"/>
+			</basicnumber>
+			<basicnumber name="legs">
+				<anchored to="breakpoint" position="right" offset="10,0" width="50"/>
+			</basicnumber>
+			<basicnumber name="asafavour">
+				<anchored to="maintenance" position="right" offset="10,0" width="50"/>
+			</basicnumber>
+			<basicnumber name="buyersmarket">
+				<anchored to="total" position="right" offset="10,0" width="50"/>
+			</basicnumber>
+			<basicnumber name="atvalue">
+				<anchored to="total" position="right" offset="10,0" width="50"/>
+			</basicnumber>
+			<basicnumber name="labour">
+				<anchored to="total" position="right" offset="10,0" width="50"/>
+			</basicnumber>
+			<basicnumber name="hazardpay">
+				<anchored to="total" position="right" offset="10,0" width="50"/>
+			</basicnumber>
+			<basicnumber name="100pcmarkup">
+				<anchored to="total" position="right" offset="10,0" width="50"/>
+			</basicnumber>
+			<basicnumber name="expenses">
+				<anchored to="total" position="right" offset="10,0" width="50"/>
+			</basicnumber>
+		</sheetdata>
+	</windowclass>
+
+</root>
